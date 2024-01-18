@@ -12,7 +12,7 @@ export default function Home() {
 
   async function getImage() {
     const response = await fetch(
-      `https://graph.instagram.com/v18.0/17898781577791819?fields=id,media_type, media_url,username,timestamp&access_token=IGQWRQQUpPN0RZAcE9ON3U4M1gxRmtQanlQY1ROZAllOQkF2QXl4cVVIWkh2V0lueHlMRC1TUkpTck1mVmxacEw0d3FrTFJobjQ4RFM3SWZAOeWwxYXJzQS1ydFVsbnBTYWhPOHZAQb05QbGQxNVpDcEstaGNoeVVzT1kZD`
+      `https://graph.instagram.com/v18.0/17898781577791819?fields=id,media_type, media_url,username,timestamp&access_token=`
     )
 
     const data = await response.json()
