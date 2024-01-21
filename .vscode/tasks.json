@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0", // Add the "version" property
+  "type": "shell",
+  "label": "start-dev",
+  "command": "node start-dev.mjs",
+  "presentation": {
+    "reveal": "always"
+  },
+  "problemMatcher": []
+}
