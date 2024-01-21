@@ -1,5 +1,8 @@
 'use client'
 
+
+import PrimaryNavbar from '@/components/navbar';
+import Post from '@/components/post';
 import { NextUIProvider } from '@nextui-org/react'
 import { Button } from '@nextui-org/react'
 import getData from '@/lib/getData'
@@ -21,10 +24,14 @@ export default function Home() {
   return (
     <NextUIProvider>
       <div className="container">
+        <h1 className='mb-10 text-center font-bold text-3xl'>instagram 2.0</h1>
+        <PrimaryNavbar />
+        <Post />
+        <Post />
+        <Post />
         <Button onClick={tets} color="primary">
           Test
         </Button>
-
         <Button onClick={getImage} color="primary">
           image
         </Button>
