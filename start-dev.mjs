@@ -9,7 +9,7 @@ let ngrok
   try {
     ngrok = await import('ngrok')
   } catch (error) {
-    await exec('npm install -g ngrok')
+    await exec('npm install --save-dev ngrok')
     ngrok = await import('ngrok')
   }
 
