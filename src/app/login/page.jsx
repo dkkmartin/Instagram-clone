@@ -1,9 +1,11 @@
 'use client'
+import LoginPage from '@/components/LoginPage/loginPage'
 import { Button } from '@nextui-org/react'
 
 export default function Auth() {
   function handleClick() {
     const clientId = '923874965815275'
+    // Fix this when deploying
     const redirectUri =
       process.env.NODE_ENV === 'development'
         ? 'https://mildly-pro-pipefish.ngrok-free.app'
@@ -19,10 +21,10 @@ export default function Auth() {
   }
 
   return (
-    <div>
+    <LoginPage>
       <Button color="primary" onClick={handleClick}>
         Login
       </Button>
-    </div>
+    </LoginPage>
   )
 }

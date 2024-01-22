@@ -13,8 +13,9 @@ export default function Home() {
 
   useEffect(() => {
     const fetchTokenAndData = async () => {
-      await fetchAndStoreToken()
       const cookie = JSON.parse(Cookies.get('token'))
+      if (cookie.access_token === undefined) return console.log('no token')
+      await fetchAndStoreToken()
       const data = await getData(cookie.access_token)
       setData(data)
     }
@@ -24,13 +25,8 @@ export default function Home() {
 
   return (
     <NextUIProvider>
-      <Link href={'/authentication'}>
-        <Button color="danger">Login</Button>
-      </Link>
-
       <div className="container">
         <h1 className="mb-10 text-center font-bold text-3xl">instagram 2.0</h1>
-
         <Post />
         <Post />
         <Post />
