@@ -5,7 +5,6 @@ import Post from '@/components/post'
 import { NextUIProvider } from '@nextui-org/react'
 import { Button } from '@nextui-org/react'
 import getData from '@/lib/getData'
-import Profile from './profile/page'
 
 import "@/app/profile/profile.scss"
 
@@ -18,7 +17,6 @@ export default function Home() {
   return (
     <NextUIProvider>
       <div className="container">
-      <Profile />
         <Button onClick={tets} color="primary">
           teest
         </Button>
