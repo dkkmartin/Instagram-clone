@@ -1,11 +1,9 @@
 'use server'
 
-export default async function getData() {
-  const response = await fetch(
-    `https://graph.instagram.com/v18.0/me/media?access_token=${process.env.API_KEY}`
-  )
+export default async function getData(TOKEN) {
+  const url = `https://graph.instagram.com/me/media?fields=id,caption&access_token=${TOKEN}`
 
-  const data = await response.json()
+  const response = await fetch(url)
 
-  return data
+  return response.json()
 }

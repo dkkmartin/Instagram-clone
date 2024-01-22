@@ -4,11 +4,19 @@ import PrimaryNavbar from '@/components/Navbar/navbar'
 import Post from '@/components/UserPost/post'
 import { NextUIProvider } from '@nextui-org/react'
 import { Button } from '@nextui-org/react'
+import Cookies from 'js-cookie'
+import { useEffect } from 'react'
+import { fetchAndStoreToken } from '@/fetchAndStoreToken'
 import getData from '@/lib/getData'
 
 export default function Home() {
+  useEffect(() => {
+    fetchAndStoreToken()
+  }, [])
+
   async function tets() {
-    const data = await getData()
+    const cookie = JSON.parse(Cookies.get('token'))
+    const data = await getData(cookie.access_token)
     console.log(data)
   }
 
