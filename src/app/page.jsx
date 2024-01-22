@@ -1,7 +1,7 @@
 'use client'
 
-import PrimaryNavbar from '@/components/navbar'
-import Post from '@/components/post'
+import PrimaryNavbar from '@/components/Navbar/navbar'
+import Post from '@/components/UserPost/post'
 import { NextUIProvider } from '@nextui-org/react'
 import { Button } from '@nextui-org/react'
 import getData from '@/lib/getData'
