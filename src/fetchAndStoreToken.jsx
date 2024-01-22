@@ -1,4 +1,3 @@
-// lib/fetchAndStoreToken.js
 import Cookies from 'js-cookie'
 import getToken from '@/lib/getToken'
 

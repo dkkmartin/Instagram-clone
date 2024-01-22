@@ -18,5 +18,5 @@ export default async function getToken(CODE) {
     body: new URLSearchParams(params),
   })
 
-  if (response.status !== 400) return response.json()
+  return response.json()
 }
