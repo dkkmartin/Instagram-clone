@@ -6,8 +6,6 @@ import { NextUIProvider } from '@nextui-org/react'
 import { Button } from '@nextui-org/react'
 import getData from '@/lib/getData'
 
-import "@/app/profile/profile.scss"
-
 export default function Home() {
   async function tets() {
     const data = await getData()
