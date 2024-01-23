@@ -4,7 +4,7 @@ import Post from '@/components/UserPost/post'
 import { NextUIProvider } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
-import { fetchAndStoreToken } from '@/fetchAndStoreToken'
+import { fetchAndStoreToken } from '@/lib/fetchAndStoreToken'
 import getData from '@/lib/getData'
 
 export default function Home() {
