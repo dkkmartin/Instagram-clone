@@ -13,22 +13,27 @@ export default function Home() {
 
   useEffect(() => {
     const fetchTokenAndData = async () => {
-      const cookie = JSON.parse(Cookies.get('token'))
-      if (cookie.access_token === undefined) return console.log('no token')
-      await fetchAndStoreToken()
-      const data = await getData(cookie.access_token)
-      setData(data)
+      try {
+        const cookie = Cookies.get('token')
+          ? JSON.parse(Cookies.get('token'))
+          : null
+        if (!cookie || cookie.access_token === undefined) {
+          return console.log('no token')
+        }
+        await fetchAndStoreToken()
+        const data = await getData(cookie.access_token)
+        setData(data)
+      } catch (error) {
+        console.error('An error occurred:', error)
+      }
     }
-
+ 
     fetchTokenAndData()
   }, [])
 
   return (
     <NextUIProvider>
       <div className="container">
-        <Button onClick={tets} color="primary">
-          teest
-        </Button>
         <h1 className="mb-10 text-center font-bold text-3xl">instagram 2.0</h1>
         <Post />
         <Post />
