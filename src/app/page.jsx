@@ -1,27 +1,35 @@
 'use client'
 
 import Post from '@/components/UserPost/post'
-import { Button, NextUIProvider } from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { fetchAndStoreToken } from '@/fetchAndStoreToken'
 import getData from '@/lib/getData'
-import Link from 'next/link'
 
 export default function Home() {
   const [data, setData] = useState(null)
 
   useEffect(() => {
     const fetchTokenAndData = async () => {
-      const cookie = JSON.parse(Cookies.get('token'))
-      if (cookie.access_token === undefined) return console.log('no token')
-      await fetchAndStoreToken()
-      const data = await getData(cookie.access_token)
-      setData(data)
+      try {
+        await fetchAndStoreToken()
+        const cookie = Cookies.get('token')
+          ? JSON.parse(Cookies.get('token'))
+          : null
+        const data = await getData(cookie.access_token)
+        setData(data)
+      } catch (error) {
+        console.error('An error occurred:', error)
+      }
     }
 
     fetchTokenAndData()
   }, [])
+
+  useEffect(() => {
+    console.log(data)
+  })
 
   return (
     <NextUIProvider>
