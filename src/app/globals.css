@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.container {
+/* Skal bruges i egen CSS fil for komponentet og ikke i globals */
+/* .container {
     height: 100dvh;
     min-width: 430px;
     background-color: rgb(85, 85, 85);
-}
+} */
