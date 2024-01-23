@@ -22,7 +22,7 @@ export default function LoginPage() {
                 <LoginButton>opret ny bruger</LoginButton>
             </div>
 
-            <Link href={'privacy'}>Test</Link>
-                    </section>
+            <Link href={'login'}>Test</Link>
+        </section>
     )
 }

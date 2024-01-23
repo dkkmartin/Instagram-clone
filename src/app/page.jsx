@@ -18,6 +18,7 @@ export default function Home() {
         <Button onClick={tets} color="primary">
           teest
         </Button>
+
         <h1 className="mb-10 text-center font-bold text-3xl">instagram 2.0</h1>
         <PrimaryNavbar />
         <Post />
