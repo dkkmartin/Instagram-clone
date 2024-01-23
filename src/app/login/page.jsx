@@ -20,11 +20,5 @@ export default function Auth() {
     window.location.href = authLink
   }
 
-  return (
-    <LoginPage>
-      <Button color="primary" onClick={handleClick}>
-        Login
-      </Button>
-    </LoginPage>
-  )
+  return <LoginPage handleClick={handleClick}></LoginPage>
 }

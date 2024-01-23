@@ -3,7 +3,7 @@ import LoginButton from './loginButton'
 import PreviousUser from './previousUser'
 import React from 'react'
 
-export default function LoginPage() {
+export default function LoginPage({ handleClick }) {
   return (
     <section
       className="flex items-center
@@ -17,7 +17,7 @@ export default function LoginPage() {
       </div>
 
       <div className="flex flex-col w-full items-center">
-        <LoginButton>login</LoginButton>
+        <LoginButton onClick={handleClick}>login</LoginButton>
         <LoginButton>opret ny bruger</LoginButton>
       </div>
     </section>
