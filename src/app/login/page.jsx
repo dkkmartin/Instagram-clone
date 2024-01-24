@@ -1,8 +1,41 @@
 'use client'
+
+import Cookies from 'js-cookie'
 import LoginPage from '@/components/LoginPage/loginPage'
-import { Button } from '@nextui-org/react'
+import { useEffect, useState } from 'react'
+import { fetchAndStoreToken } from '@/lib/fetchAndStoreToken'
+import { useRouter } from 'next/navigation'
 
 export default function Auth() {
+  const router = useRouter()
+
+  useEffect(() => {
+    const fetchTokenAndData = async () => {
+      try {
+        await fetchAndStoreToken()
+        const cookie = Cookies.get('token')
+          ? JSON.parse(Cookies.get('token'))
+          : null
+      } catch (error) {
+        console.error('An error occurred:', error)
+      }
+    }
+
+    fetchTokenAndData()
+  }, [])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const token = Cookies.get('token')
+
+      if (token) {
+        router.push('/')
+      }
+    }, 1000) // Check every second
+
+    return () => clearInterval(intervalId) // Clean up on unmount
+  }, [router])
+
   function handleClick() {
     const clientId = '923874965815275'
     // Fix this when deploying
