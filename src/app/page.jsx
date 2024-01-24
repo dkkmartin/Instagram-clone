@@ -23,7 +23,7 @@ export default function Home() {
         console.error('An error occurred:', error)
       }
     }
-
+ 
     fetchTokenAndData()
   }, [])
 
