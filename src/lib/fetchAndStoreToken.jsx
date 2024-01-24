@@ -8,7 +8,11 @@ export async function fetchAndStoreToken() {
   if (CODE) {
     const data = await getToken(CODE)
     const dataStr = JSON.stringify(data)
-    Cookies.set('token', dataStr, { expires: 1 })
+    Cookies.set('token', dataStr, {
+      expires: 1,
+      secure: process.env.NODE_ENV !== 'development',
+      sameSite: 'lax',
+    })
     console.log('token stored')
   }
 }

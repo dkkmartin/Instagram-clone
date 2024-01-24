@@ -1,12 +1,11 @@
 'use client'
 
 import Post from '@/components/UserPost/post'
-import { Button, NextUIProvider } from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
-import { fetchAndStoreToken } from '@/fetchAndStoreToken'
+import { fetchAndStoreToken } from '@/lib/fetchAndStoreToken'
 import getData from '@/lib/getData'
-import Link from 'next/link'
 
 export default function Home() {
   const [data, setData] = useState(null)
@@ -14,13 +13,10 @@ export default function Home() {
   useEffect(() => {
     const fetchTokenAndData = async () => {
       try {
+        await fetchAndStoreToken()
         const cookie = Cookies.get('token')
           ? JSON.parse(Cookies.get('token'))
           : null
-        if (!cookie || cookie.access_token === undefined) {
-          return console.log('no token')
-        }
-        await fetchAndStoreToken()
         const data = await getData(cookie.access_token)
         setData(data)
       } catch (error) {
@@ -31,13 +27,14 @@ export default function Home() {
     fetchTokenAndData()
   }, [])
 
+  useEffect(() => {
+    console.log(data)
+  })
+
   return (
     <NextUIProvider>
       <div className="container">
         <h1 className="mb-10 text-center font-bold text-3xl">instagram 2.0</h1>
-        <Post />
-        <Post />
-        <Post />
       </div>
     </NextUIProvider>
   )

@@ -4,6 +4,20 @@ import Link from 'next/link'
 import Image from 'next/image'
 
 export default function PrimaryNavbar() {
+<<<<<<< HEAD
+    return (
+        <header className="fixed z-40 bottom-0 w-full">
+            <Navbar className="border">
+                <NavbarContent className="flex justify-around">
+                    <NavbarLinks name="home" />
+                    <NavbarLinks name="search" />
+                    <NavbarLinks name="add_circle" />
+                    <NavbarLinks name="account_circle" />
+                </NavbarContent>
+            </Navbar>
+        </header>
+    );
+=======
   return (
     <header className=" fixed z-40 bottom-0 w-full border-t">
       <Navbar>
@@ -58,4 +72,5 @@ export default function PrimaryNavbar() {
       </Navbar>
     </header>
   )
+>>>>>>> 0cb6d919f529d2a70c58adff8c26e2a4baa1b2a9
 }
