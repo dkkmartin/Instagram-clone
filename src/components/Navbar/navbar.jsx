@@ -1,11 +1,23 @@
+'use client'
+
 import { Button, Navbar, NavbarContent } from '@nextui-org/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 
 export default function PrimaryNavbar() {
-  return (
-    <header className=" fixed z-40 bottom-0 w-full border-t">
+  const [onLoginRoute, setOnLoginRoute] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (pathname === '/login') setOnLoginRoute(true)
+  }, [pathname])
+
+  if (onLoginRoute) {
+    return null
+  } else {
+    ;<header className=" fixed z-40 bottom-0 w-full border-t">
       <Navbar>
         <NavbarContent
           className="sm:flex gap-4 w-full justify-between"
@@ -57,5 +69,6 @@ export default function PrimaryNavbar() {
         </NavbarContent>
       </Navbar>
     </header>
-  )
+    return null
+  }
 }

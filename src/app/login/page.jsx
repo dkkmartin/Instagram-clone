@@ -28,7 +28,7 @@ export default function Auth() {
       if (token) {
         router.push('/')
       }
-    }, 500) // Check every second
+    }, 500)
 
     return () => clearInterval(intervalId) // Clean up on unmount
   }, [router])
