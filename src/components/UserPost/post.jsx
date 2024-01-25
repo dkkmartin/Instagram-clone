@@ -5,11 +5,20 @@ import PostsLinks from './post-links'
 import PostInfo from './post-info'
 import Image from 'next/image'
 
-export default function Post({ imageSrc }) {
+export default function Post({ username, mediaType, mediaUrl }) {
   return (
     <section className="mb-20 mt-1">
       <div className="flex justify-center">
-        <Image src={imageSrc} width={350} height={350} alt=""></Image>
+        {mediaType === 'VIDEO' ? (
+          <iframe
+            className="rounded-lg"
+            src={mediaUrl}
+            allowFullScreen
+            controls
+          ></iframe>
+        ) : (
+          <Image src={mediaUrl} width={350} height={350} alt=""></Image>
+        )}
       </div>
       <article>
         <Navbar className="z-20">
