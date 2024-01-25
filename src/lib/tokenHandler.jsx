@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
-import getToken from '@/lib/getToken'
+import getToken from './getToken'
 
-export async function fetchAndStoreToken() {
+export default async function tokenHandler() {
   const urlParams = new URLSearchParams(window.location.search)
   const CODE = urlParams.get('code')
 

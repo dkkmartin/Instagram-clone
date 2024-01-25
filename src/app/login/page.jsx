@@ -1,27 +1,24 @@
 'use client'
 
 import Cookies from 'js-cookie'
-import LoginPage from '@/components/LoginPage/loginPage'
-import { useEffect, useState } from 'react'
-import { fetchAndStoreToken } from '@/lib/fetchAndStoreToken'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import tokenHandler from '@/lib/tokenHandler'
+import LoginPage from '@/components/LoginPage/loginPage'
 
 export default function Auth() {
   const router = useRouter()
 
   useEffect(() => {
-    const fetchTokenAndData = async () => {
+    const runTokenHandler = async () => {
       try {
-        await fetchAndStoreToken()
-        const cookie = Cookies.get('token')
-          ? JSON.parse(Cookies.get('token'))
-          : null
+        await tokenHandler()
       } catch (error) {
         console.error('An error occurred:', error)
       }
     }
 
-    fetchTokenAndData()
+    runTokenHandler()
   }, [])
 
   useEffect(() => {
@@ -31,7 +28,7 @@ export default function Auth() {
       if (token) {
         router.push('/')
       }
-    }, 1000) // Check every second
+    }, 500) // Check every second
 
     return () => clearInterval(intervalId) // Clean up on unmount
   }, [router])
@@ -53,5 +50,5 @@ export default function Auth() {
     window.location.href = authLink
   }
 
-  return <LoginPage handleClick={handleClick}></LoginPage>
+  return <LoginPage handleClick={handleClick} />
 }
