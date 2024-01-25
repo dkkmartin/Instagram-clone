@@ -8,7 +8,9 @@ import Image from 'next/image'
 export default function Post({ imageSrc }) {
   return (
     <section className="mb-20 mt-1">
-      <Image src={imageSrc} className='box-border h-80 w-80 mx-auto bg-black'></Image>
+      <div className="flex justify-center">
+        <Image src={imageSrc} width={350} height={350} alt=""></Image>
+      </div>
       <article>
         <Navbar className="z-20">
           <NavbarContent className="flex">
