@@ -33,7 +33,14 @@ export default function Home() {
       <div className="container"></div>
       {!isLoading && data && data.data ? (
         data.data.map((post) => {
-          return <Post key={post.id} mediaUrl={post.media_url} />
+          return (
+            <Post
+              key={post.id}
+              username={post.username}
+              mediaType={post.media_type}
+              mediaUrl={post.media_url}
+            />
+          )
         })
       ) : (
         <>
