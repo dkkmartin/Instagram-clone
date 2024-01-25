@@ -1,4 +1,5 @@
 'use client'
+
 import "./links.css"
 import { Navbar, NavbarContent, Avatar } from '@nextui-org/react'
 import PostsLinks from './post-links'
