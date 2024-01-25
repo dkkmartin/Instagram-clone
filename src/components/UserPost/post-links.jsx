@@ -14,12 +14,14 @@ export default function PostsLinks(props) {
       </NavbarItem>
       <NavbarItem className="flex-1">
         <Button isIconOnly color="none">
-          <Image
-            src={'/PhChatTeardropDotsFill.svg'}
-            alt=""
-            width={30}
-            height={30}
-          ></Image>
+          <a href="../postComments">
+            <Image
+              src={'/PhChatTeardropDotsFill.svg'}
+              alt=""
+              width={30}
+              height={30}
+            ></Image>
+          </a>
         </Button>
       </NavbarItem>
       <NavbarItem className="flex-3">
