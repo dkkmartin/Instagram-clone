@@ -23,7 +23,7 @@ export default function Home() {
         console.error('An error occurred:', error)
       }
     }
- 
+
     fetchTokenAndData()
   }, [])
 
@@ -35,6 +35,7 @@ export default function Home() {
     <NextUIProvider>
       <div className="container">
         <h1 className="mb-10 text-center font-bold text-3xl">instagram 2.0</h1>
+        <Post />
       </div>
     </NextUIProvider>
   )
