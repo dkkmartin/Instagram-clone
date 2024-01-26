@@ -1,18 +1,20 @@
 'use client'
 
 import Cookies from 'js-cookie'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import tokenHandler from '@/lib/tokenHandler'
 import LoginPage from '@/components/LoginPage/loginPage'
+import { Spinner } from '@nextui-org/react'
 
 export default function Auth() {
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     const runTokenHandler = async () => {
       try {
-        await tokenHandler()
+        await tokenHandler({ setIsLoading })
       } catch (error) {
         console.error('An error occurred:', error)
       }
@@ -22,6 +24,10 @@ export default function Auth() {
   }, [])
 
   useEffect(() => {
+    const handleRouteChange = () => {
+      setIsLoading(false)
+    }
+
     const intervalId = setInterval(() => {
       const token = Cookies.get('token')
 
@@ -30,7 +36,17 @@ export default function Auth() {
       }
     }, 500)
 
-    return () => clearInterval(intervalId) // Clean up on unmount
+    if (router && router.events) {
+      router.events.on('routeChangeComplete', handleRouteChange)
+    }
+
+    return () => {
+      clearInterval(intervalId)
+
+      if (router && router.events) {
+        router.events.off('routeChangeComplete', handleRouteChange)
+      }
+    }
   }, [router])
 
   function handleClick() {
@@ -50,5 +66,18 @@ export default function Auth() {
     window.location.href = authLink
   }
 
-  return <LoginPage handleClick={handleClick} />
+  return (
+    <>
+      {isLoading ? (
+        <>
+          <div className="absolute h-dvh w-dvw flex justify-center items-center z-10 bg-black opacity-70 ">
+            <Spinner size="lg" />
+          </div>
+          <LoginPage className={''} handleClick={handleClick} />
+        </>
+      ) : (
+        <LoginPage className={''} handleClick={handleClick} />
+      )}
+    </>
+  )
 }
