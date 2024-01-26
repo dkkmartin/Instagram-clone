@@ -7,7 +7,7 @@ export default function LoginPage({ handleClick }) {
   return (
     <section
       className="flex items-center
-        flex-col justify-evenly h-screen bg-[rgb(85,85,85)]"
+        flex-col justify-evenly h-screen bg-black"
     >
       <div className="w-full flex flex-col items-center">
         <Image src="/appicon.png" alt="App Icon" width={150} height={100} />
