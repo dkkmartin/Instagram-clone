@@ -7,8 +7,8 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 export default function PrimaryNavbar() {
-  const [onLoginRoute, setOnLoginRoute] = useState(false)
   const pathname = usePathname()
+  const [onLoginRoute, setOnLoginRoute] = useState(pathname === '/login')
 
   useEffect(() => {
     if (pathname === '/login') {
