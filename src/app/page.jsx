@@ -24,31 +24,28 @@ export default function Home() {
     getMediaData()
   }, [])
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <NextUIProvider>
-      <div className="container"></div>
-      {!isLoading && data && data.data ? (
-        data.data.map((post) => {
-          return (
-            <Post
-              key={post.id}
-              username={post.username}
-              mediaType={post.media_type}
-              mediaUrl={post.media_url}
-            />
-          )
-        })
-      ) : (
-        <>
-          <div className="flex justify-center items-center h-screen">
-            <Spinner size="lg" color="primary" />
-          </div>
-        </>
-      )}
+      <div className="container flex flex-col gap-16 p-4">
+        {!isLoading && data && data.data ? (
+          data.data.map((post) => {
+            return (
+              <Post
+                key={post.id}
+                username={post.username}
+                mediaType={post.media_type}
+                mediaUrl={post.media_url}
+              />
+            )
+          })
+        ) : (
+          <>
+            <div className="flex justify-center items-center h-screen">
+              <Spinner size="lg" color="primary" />
+            </div>
+          </>
+        )}
+      </div>
     </NextUIProvider>
   )
 }
