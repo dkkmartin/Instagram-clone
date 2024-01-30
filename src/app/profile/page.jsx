@@ -11,7 +11,7 @@ export default function Profile() {
   return (
     <section className="w-auto h-auto flex flex-col gap-16 items-center">
       <header className="text-4xl mt-4">
-        <h1 className="">{'@' + data.data[0].username}</h1>
+        <h1 className="">{'@' + data?.data[0].username}</h1>
       </header>
       <Avatar
         src="https://i.pravatar.cc/300"
