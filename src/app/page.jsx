@@ -5,9 +5,10 @@ import getData from '@/lib/getData'
 import { NextUIProvider, Spinner } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
+import { useData } from '@/stores/useMediaStore'
 
 export default function Home() {
-  const [data, setData] = useState(null)
+  const { data, setData } = useData()
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -22,11 +23,15 @@ export default function Home() {
       setIsLoading(false)
     }
     getMediaData()
-  }, [])
+  }, [setData])
+
+  useEffect(() => {
+    console.log(data)
+  })
 
   return (
     <NextUIProvider>
-      <div className="container flex flex-col gap-16 p-4">
+      <div className="container flex flex-col gap-16 p-4 mb-16">
         {!isLoading && data && data.data ? (
           data.data.map((post) => {
             return (

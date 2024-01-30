@@ -1,92 +1,23 @@
 'use client'
 
-import './profile.scss'
 import Image from 'next/image'
+import { useData } from '@/stores/useMediaStore'
+import { Avatar, AvatarGroup, AvatarIcon } from '@nextui-org/react'
+import Gallery from '@/components/Profile/gallery'
 
 export default function Profile() {
+  const { data } = useData()
+
   return (
-    <section className="profileContainer">
-      <header className="topHeader">
-        <h1 className="userName">Navn</h1>
+    <section className="w-auto h-auto flex flex-col gap-16 items-center">
+      <header className="text-4xl mt-4">
+        <h1 className="">{'@' + data?.data[0].username}</h1>
       </header>
-      <Image
-        className="userImg"
-        src="https://placehold.co/200x200"
-        alt=""
-        width={200}
-        height={200}
+      <Avatar
+        src="https://i.pravatar.cc/300"
+        className="w-[200px] h-[200px] text-large"
       />
-
-      <div className="bioContainer">
-        <p className="userBio">bio</p>
-        <p className="userLocation">location</p>
-      </div>
-
-      <section className="galleryContainer">
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-        <Image
-          className="galleryImage"
-          src="https://placehold.co/200x200"
-          alt=""
-          width={200}
-          height={200}
-        />
-      </section>
+      <Gallery data={data} />
     </section>
   )
 }
