@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { NavbarItem, Button, NavbarContent, className } from '@nextui-org/react'
 import LikeButton from './likeButton'
+import SaveButton from './saveButton'
 
 export default function PostsLinks(props) {
   return (
@@ -35,14 +36,7 @@ export default function PostsLinks(props) {
         </Button>
       </NavbarItem>
       <NavbarItem className="flex-3">
-        <Button isIconOnly color="none">
-          <Image
-            src={'/MaterialSymbolsBookmarkAdd.svg'}
-            alt=""
-            width={30}
-            height={30}
-          ></Image>
-        </Button>
+        <SaveButton />
       </NavbarItem>
     </NavbarContent>
   )

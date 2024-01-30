@@ -6,20 +6,24 @@ import MyComment from '@/components/UserPost/comments/my-comment'
 export default function PostComment() {
     return (
         <div>
-            <header className='flex p-3'>
+            <header className='flex p-3 border'>
                 <button><a href="../"><img src="../arrow_back.png" alt="back" /></a></button>
-                <h1 className='mx-auto'>Kommentarer</h1>
+                <h1 className='mx-auto font-semibold font-mono'>Kommentarer</h1>
             </header>
-            <section className='flex'>
-                <div className='flex flex-wrap'>
-                    <span>
-                        Navn
+            <section className='flex border py-5 px-2'>
+                <div className='flex flex-wrap gap-1'>
+                    <span className='font-black font-mono'>
+                        Navn Efternavn
                     </span>
-                    <span>
+                    <span className='font-mono'>
                         Kommentar
                     </span>
                 </div>
             </section>
+            <UserComment />
+            <UserComment />
+            <UserComment />
+            <UserComment />
             <UserComment />
             <MyComment />
         </div>
