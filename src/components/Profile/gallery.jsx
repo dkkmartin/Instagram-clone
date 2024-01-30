@@ -7,7 +7,7 @@ export default function Gallery({ data }) {
 
   return (
     <>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full mb-16">
         <Tabs
           color="primary"
           variant="solid"
@@ -42,6 +42,9 @@ export default function Gallery({ data }) {
                 </div>
               ))}
             </section>
+          </Tab>
+          <Tab key="favourite" title="Favourite">
+            {/* Hvis favourite her */}
           </Tab>
         </Tabs>
       </div>

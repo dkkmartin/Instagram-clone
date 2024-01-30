@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <NextUIProvider>
-      <div className="container flex flex-col gap-16 p-4">
+      <div className="container flex flex-col gap-16 p-4 mb-16">
         {!isLoading && data && data.data ? (
           data.data.map((post) => {
             return (

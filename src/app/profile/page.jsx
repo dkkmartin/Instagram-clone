@@ -8,8 +8,6 @@ import Gallery from '@/components/Profile/gallery'
 export default function Profile() {
   const { data } = useData()
 
-  console.log(data)
-
   return (
     <section className="w-auto h-auto flex flex-col gap-16 items-center">
       <header className="text-4xl mt-4">
