@@ -1,8 +1,6 @@
 'use client'
 
 import './profile.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 
 export default function Profile() {
@@ -10,9 +8,6 @@ export default function Profile() {
     <section className="profileContainer">
       <header className="topHeader">
         <h1 className="userName">Navn</h1>
-        <li className="userSettings">
-          <FontAwesomeIcon icon={faBars} />
-        </li>
       </header>
       <Image
         className="userImg"

@@ -1,16 +1,16 @@
 import Image from 'next/image'
 import LoginButton from './loginButton'
 import PreviousUser from './previousUser'
+import InstagramTextScroll from './instagramTextScroll'
 import React from 'react'
 
-export default function LoginPage({ handleClick }) {
+export default function LoginPage({ handleClick, className }) {
   return (
     <section
-      className="flex items-center
-        flex-col justify-evenly h-screen bg-black"
+      className={`flex items-center
+        flex-col justify-evenly h-screen bg-black ${className}`}
     >
       <div className="w-full flex flex-col items-center">
-        <Image src="/appicon.png" alt="App Icon" width={150} height={100} />
         <article className="mt-20 w-3/5">
           <PreviousUser />
         </article>
