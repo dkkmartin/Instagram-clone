@@ -50,31 +50,31 @@ export interface Database {
       }
       users: {
         Row: {
-          Comments: Json | null
-          created_at: string
-          Favourite: Json | null
-          Information: Json | null
-          liked: Json | null
-          media: Json | null
+          comments: Json | null
+          favourites: Json | null
+          information: Json | null
+          liked: string[] | null
+          media_url: Json | null
           user_id: number
+          user_name: string | null
         }
         Insert: {
-          Comments?: Json | null
-          created_at?: string
-          Favourite?: Json | null
-          Information?: Json | null
-          liked?: Json | null
-          media?: Json | null
-          user_id: number
+          comments?: Json | null
+          favourites?: Json | null
+          information?: Json | null
+          liked?: string[] | null
+          media_url?: Json | null
+          user_id?: number
+          user_name?: string | null
         }
         Update: {
-          Comments?: Json | null
-          created_at?: string
-          Favourite?: Json | null
-          Information?: Json | null
-          liked?: Json | null
-          media?: Json | null
+          comments?: Json | null
+          favourites?: Json | null
+          information?: Json | null
+          liked?: string[] | null
+          media_url?: Json | null
           user_id?: number
+          user_name?: string | null
         }
         Relationships: []
       }
