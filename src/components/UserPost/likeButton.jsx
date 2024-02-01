@@ -7,13 +7,13 @@ import Cookies from 'js-cookie'
 export default function LikeButton({ postId }) {
   const [isClicked, setIsClicked] = useState(false)
 
-  const updateLikedStatus = async (userID, postId) => {
-    const response = await fetch('/like/', {
+  const updateLikedStatus = async (postId) => {
+    const response = await fetch('/api/like/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ userID, postId }),
+      body: JSON.stringify({ postId }),
     })
 
     const data = await response.json()
@@ -22,10 +22,14 @@ export default function LikeButton({ postId }) {
 
   async function handleClick() {
     try {
-      const cookie = JSON.parse(Cookies.get('token'))
-      updateLikedStatus(cookie.user_id, postId)
-      setIsClicked(!isClicked)
+      // Optimistically update the UI
+      setIsClicked(true)
+      const statusCode = await updateLikedStatus(postId)
+      if (statusCode.code !== 200) {
+        setIsClicked(false)
+      }
     } catch (error) {
+      setIsClicked(false)
       console.log(error)
     }
   }
