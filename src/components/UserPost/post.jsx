@@ -9,7 +9,7 @@ import Image from 'next/image'
 export default function Post({ username, mediaType, mediaUrl }) {
   return (
     <section className="rounded-xl shadow-large">
-      <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto">
+      <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto py-2">
         <Avatar
           className="flex-0 mt-1"
           src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
