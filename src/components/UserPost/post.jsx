@@ -6,7 +6,7 @@ import PostsLinks from './post-links'
 import PostInfo from './post-info'
 import Image from 'next/image'
 
-export default function Post({ username, mediaType, mediaUrl }) {
+export default function Post({ username, mediaType, mediaUrl, postId }) {
   return (
     <section className="rounded-xl shadow-large">
       <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto py-2">
@@ -42,7 +42,7 @@ export default function Post({ username, mediaType, mediaUrl }) {
       <article className="max-w-[350px] m-auto">
         <Navbar className="z-20">
           <NavbarContent className="flex">
-            <PostsLinks />
+            <PostsLinks postId={postId} />
           </NavbarContent>
         </Navbar>
       </article>

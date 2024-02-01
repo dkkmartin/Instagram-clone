@@ -24,33 +24,57 @@ export interface Database {
         }
         Relationships: []
       }
+      posts: {
+        Row: {
+          id: number
+          media_type: string | null
+          media_url: string | null
+          timestamp: string | null
+          username: string | null
+        }
+        Insert: {
+          id: number
+          media_type?: string | null
+          media_url?: string | null
+          timestamp?: string | null
+          username?: string | null
+        }
+        Update: {
+          id?: number
+          media_type?: string | null
+          media_url?: string | null
+          timestamp?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           Comments: Json | null
           created_at: string
           Favourite: Json | null
-          id: number
           Information: Json | null
           liked: Json | null
           media: Json | null
+          user_id: number
         }
         Insert: {
           Comments?: Json | null
           created_at?: string
           Favourite?: Json | null
-          id: number
           Information?: Json | null
           liked?: Json | null
           media?: Json | null
+          user_id: number
         }
         Update: {
           Comments?: Json | null
           created_at?: string
           Favourite?: Json | null
-          id?: number
           Information?: Json | null
           liked?: Json | null
           media?: Json | null
+          user_id?: number
         }
         Relationships: []
       }
