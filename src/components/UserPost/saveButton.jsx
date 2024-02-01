@@ -2,22 +2,22 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 export default function SaveButton() {
-    const [isClicked, setIsClicked] = useState(() => {
+    const [isSaved, setIsSaved] = useState(() => {
         const savedState = window.localStorage.getItem('save_button');
         return savedState ? JSON.parse(savedState) : true;
     });
 
     function handleClick() {
-        setIsClicked(!isClicked);
+        setIsSaved(!isSaved);
     }
 
     useEffect(() => {
-        window.localStorage.setItem('save_button', JSON.stringify(isClicked));
-    }, [isClicked]);
+        window.localStorage.setItem('save_button', JSON.stringify(isSaved));
+    }, [isSaved]);
 
     return (
         <>
-            {isClicked ? (
+            {isSaved ? (
                 <Image
                     onClick={handleClick}
                     src="/MaterialSymbolsBookmarkAdd.svg"
