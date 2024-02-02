@@ -58,7 +58,11 @@ export default function Auth() {
 
   function handleClick() {
     const clientId = '923874965815275'
-    const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URL
+    // Fix this when deploying
+    const redirectUri =
+      process.env.NODE_ENV === 'development'
+        ? 'https://mildly-pro-pipefish.ngrok-free.app'
+        : process.env.NEXT_PUBLIC_REDIRECT_URL
     const scope = 'user_profile,user_media'
     const responseType = 'code'
 
