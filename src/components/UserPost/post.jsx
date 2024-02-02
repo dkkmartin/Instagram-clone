@@ -1,10 +1,11 @@
 'use client'
 
 import './links.css'
-import { Navbar, NavbarContent, Avatar } from '@nextui-org/react'
+import { Navbar, NavbarContent, Avatar, image } from '@nextui-org/react'
 import PostsLinks from './post-links'
 import PostInfo from './post-info'
 import Image from 'next/image'
+import { imageLoader } from '../imageLoader'
 
 export default function Post({ username, mediaType, mediaUrl, postId }) {
   return (
@@ -36,7 +37,13 @@ export default function Post({ username, mediaType, mediaUrl, postId }) {
             height={350}
           ></iframe>
         ) : (
-          <Image src={mediaUrl} width={350} height={350} alt=""></Image>
+          <Image
+            loader={imageLoader}
+            src={mediaUrl}
+            width={350}
+            height={350}
+            alt=""
+          ></Image>
         )}
       </div>
       <article className="max-w-[350px] m-auto">
