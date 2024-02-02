@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     }
 
     const index = liked.indexOf(res.postId)
-    let message, code
+    let message: string, code: number
 
     if (index !== -1) {
       liked = liked.filter((id) => id !== res.postId)
