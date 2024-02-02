@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 
 export const useData = create(
   persist(
     (set) => ({
       data: null,
-      setData: (data) => set({ data }),
+      setData: (data: any) => set({ data }),
     }),
     {
       name: 'data_storage', // unique name
