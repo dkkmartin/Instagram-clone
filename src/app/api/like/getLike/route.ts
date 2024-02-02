@@ -1,27 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
-import { Database } from '../../types/supabase'
+import { Database } from '../../../types/supabase'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
 
 const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
 
-export async function POST(request: Request) {
-  async function fetchLikes() {
-    const { data, error } = await supabase
-      .from('users')
-      .select('liked')
-      .eq('user_id', cookie.user_id)
-
-    if (error) {
-      console.error(error)
-      throw error
-    }
-
-    return data
-  }
-
-  const res = await request.json()
+export async function GET(request: Request, response: Response) {
   const cookies = request.headers
     .get('Cookie')
     ?.split('; ')
@@ -33,20 +18,22 @@ export async function POST(request: Request) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
-    const userData = await fetchLikes()
-    let liked = userData[0].liked
-    if (!Array.isArray(liked)) {
-      liked = []
-    }
-    const linkedArray = [...liked, res.postId]
-
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('users')
-      .update({ liked: linkedArray })
+      .select('liked')
       .eq('user_id', cookie.user_id)
 
+    if (error) {
+      console.error(error)
+      throw error
+    }
+
     if (error) throw error
-    return Response.json({ code: 200, message: 'success' })
+    return Response.json({
+      code: 200,
+      message: 'success',
+      liked: data[0].liked,
+    })
   } catch (error) {
     return Response.json({ code: 500, message: error.message })
   }
