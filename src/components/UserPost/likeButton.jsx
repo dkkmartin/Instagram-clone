@@ -1,14 +1,43 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
-import Cookies from 'js-cookie'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function LikeButton({ postId }) {
   const [isClicked, setIsClicked] = useState(false)
+  const [liked, setLiked] = useState([])
+
+  const handleLikedStatus = useCallback(() => {
+    if (liked && liked.liked && liked.liked.includes(postId)) {
+      setIsClicked(true)
+    }
+  }, [liked, postId])
+
+  useEffect(() => {
+    const checkLikedStatus = async () => {
+      const response = await fetch('/api/like/getLike', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      const data = await response.json()
+      return data
+    }
+    const saveLikedInState = async () => {
+      const likedStatus = await checkLikedStatus()
+      setLiked(likedStatus)
+    }
+    saveLikedInState()
+  }, [])
+
+  useEffect(() => {
+    handleLikedStatus()
+  }, [handleLikedStatus])
 
   const updateLikedStatus = async (postId) => {
-    const response = await fetch('/api/like/', {
+    const response = await fetch('/api/like/setLike', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,13 +52,15 @@ export default function LikeButton({ postId }) {
   async function handleClick() {
     try {
       // Optimistically update the UI
-      setIsClicked(true)
+      setIsClicked(!isClicked)
       const statusCode = await updateLikedStatus(postId)
-      if (statusCode.code !== 200) {
+      if (statusCode.code === 200) {
+        setIsClicked(true)
+      } else if (statusCode.code === 201) {
         setIsClicked(false)
       }
     } catch (error) {
-      setIsClicked(false)
+      setIsClicked(!isClicked)
       console.log(error)
     }
   }
