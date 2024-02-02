@@ -55,7 +55,7 @@ export default function Auth() {
     const redirectUri =
       process.env.NODE_ENV === 'development'
         ? 'https://mildly-pro-pipefish.ngrok-free.app'
-        : window.location.origin
+        : 'https://imaginative-dango-1dc0eb.netlify.app'
     const scope = 'user_profile,user_media'
     const responseType = 'code'
 
