@@ -57,7 +57,7 @@ export default function Auth() {
   }, [router])
 
   function handleClick() {
-    const clientId = '923874965815275'
+    const clientId = process.env.NEXT_PUBLIC_APP_ID
     // Fix this when deploying
     const redirectUri =
       process.env.NODE_ENV === 'development'
