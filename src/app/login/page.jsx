@@ -28,10 +28,17 @@ export default function Auth() {
       setIsLoading(false)
     }
 
-    const intervalId = setInterval(() => {
+    const intervalId = setInterval(async () => {
       const token = Cookies.get('token')
 
       if (token) {
+        // Adds the user ID from instagram to the database
+        await fetch('/api/adduser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         router.push('/')
       }
     }, 500)
@@ -55,7 +62,7 @@ export default function Auth() {
     const redirectUri =
       process.env.NODE_ENV === 'development'
         ? 'https://mildly-pro-pipefish.ngrok-free.app'
-        : window.location.origin
+        : process.env.NEXT_PUBLIC_REDIRECT_URL
     const scope = 'user_profile,user_media'
     const responseType = 'code'
 

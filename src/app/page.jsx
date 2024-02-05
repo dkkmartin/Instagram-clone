@@ -37,6 +37,7 @@ export default function Home() {
             return (
               <Post
                 key={post.id}
+                postId={post.id}
                 username={post.username}
                 mediaType={post.media_type}
                 mediaUrl={post.media_url}
