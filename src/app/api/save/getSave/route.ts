@@ -1,4 +1,3 @@
-// getSave.ts
 import { createClient } from '@supabase/supabase-js'
 import { Database } from '../../../types/supabase'
 
@@ -29,6 +28,7 @@ export async function GET(request: Request, response: Response) {
       throw error
     }
 
+    if (error) throw error
     return Response.json({
       code: 200,
       message: 'success',

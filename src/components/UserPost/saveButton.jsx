@@ -1,70 +1,74 @@
-import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
+'use client'
+
+import Image from 'next/image'
+import { useCallback, useEffect, useState } from 'react'
 
 export default function SaveButton({ postId }) {
-    const [isSaved, setIsSaved] = useState(false);
+    const [isClicked, setIsClicked] = useState(false)
+    const [saved, setSaved] = useState([])
 
-    const checkSavedStatus = useCallback(async () => {
-        try {
-            const response = await fetch('/api/saved/getSaved', {
+    const handleSavedStatus = useCallback(() => {
+        if (saved && saved.saved && saved.saved.includes(postId)) {
+            setIsClicked(true)
+        }
+    }, [saved, postId])
+
+    useEffect(() => {
+        const checkSavedStatus = async () => {
+            const response = await fetch('/api/save/getSave', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-            });
+            })
 
-            const data = await response.json();
-
-            if (data.saved && data.saved.includes(postId)) {
-                setIsSaved(true);
-            } else {
-                setIsSaved(false);
-            }
-        } catch (error) {
-            console.error(error);
+            const data = await response.json()
+            return data
         }
-    }, [postId]);
-
-    const updateSavedStatus = useCallback(async () => {
-        try {
-            const response = await fetch('/api/saved/setSaved', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ postId }),
-            });
-
-            const data = await response.json();
-
-            if (data.code === 200) {
-                setIsSaved(true);
-            } else if (data.code === 201) {
-                setIsSaved(false);
-            }
-        } catch (error) {
-            console.error(error);
+        const saveSavedInState = async () => {
+            const savedStatus = await checkSavedStatus()
+            setSaved(savedStatus)
         }
-    }, [postId]);
+        saveSavedInState()
+    }, [])
 
     useEffect(() => {
-        checkSavedStatus();
-    }, [checkSavedStatus]);
+        handleSavedStatus()
+    }, [handleSavedStatus])
 
-    const handleClick = async () => {
+    const updateSavedStatus = async (postId) => {
+        const response = await fetch('/api/save/setSave', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ postId }),
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    async function handleClick() {
         try {
-            setIsSaved(!isSaved);
-
-            await updateSavedStatus(postId);
+            // Optimistically update the UI
+            setIsClicked(!isClicked)
+            const statusCode = await updateSavedStatus(postId)
+            if (statusCode.code === 200) {
+                setIsClicked(true)
+            } else if (statusCode.code === 201) {
+                setIsClicked(false)
+            }
         } catch (error) {
-            setIsSaved(!isSaved);
-            console.error(error);
+            setIsClicked(!isClicked)
+            console.log(error)
         }
-    };
+    }
+
 
     return (
         <>
-            {isSaved
+            {isClicked
 
                 ? (
                     <Image
