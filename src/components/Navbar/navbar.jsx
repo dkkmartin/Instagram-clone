@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
+import LogOutButton from './logout'
 
 export default function PrimaryNavbar() {
   const pathname = usePathname()
@@ -71,6 +72,9 @@ export default function PrimaryNavbar() {
                 ></Image>
               </Button>
             </Link>
+
+            <LogOutButton />
+
           </NavbarContent>
         </Navbar>
       </header>
