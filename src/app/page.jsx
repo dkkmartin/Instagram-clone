@@ -26,8 +26,19 @@ export default function Home() {
   }, [setData])
 
   useEffect(() => {
-    console.log(data)
-  })
+    async function postMedia() {
+      if (data) {
+        await fetch('/api/addmedia', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+      }
+    }
+    postMedia()
+  }, [data])
 
   return (
     <NextUIProvider>

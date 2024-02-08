@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Modal,
   ModalContent,
@@ -9,9 +11,15 @@ import {
 } from '@nextui-org/react'
 import { useDisclosure } from '@nextui-org/react'
 import Image from 'next/image'
+import Cookies from 'js-cookie'
 
 export default function Settings() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+  const clearTokenCookie = () => {
+    Cookies.remove('token')
+    window.location.reload()
+  }
 
   return (
     <>
@@ -60,7 +68,9 @@ export default function Settings() {
               <ModalBody>
                 <Button color="primary">Edit Profile</Button>
 
-                <Button color="danger">Log out</Button>
+                <Button onClick={clearTokenCookie} color="danger">
+                  Log out
+                </Button>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
