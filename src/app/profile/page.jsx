@@ -2,9 +2,8 @@
 
 import Image from 'next/image'
 import { useData } from '@/stores/useMediaStore'
-import { Avatar, AvatarGroup, AvatarIcon, Button } from '@nextui-org/react'
+import { Avatar, AvatarGroup, AvatarIcon } from '@nextui-org/react'
 import Gallery from '@/components/Profile/gallery'
-import Link from 'next/link'
 
 export default function Profile() {
   const { data } = useData()
