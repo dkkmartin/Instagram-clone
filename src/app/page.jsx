@@ -9,6 +9,7 @@ import { useData } from '@/stores/useMediaStore'
 
 export default function Home() {
   const { data, setData } = useData()
+  const [databaseData, setDatabaseData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -26,18 +27,39 @@ export default function Home() {
   }, [setData])
 
   useEffect(() => {
-    console.log(data)
-  })
+    async function postMedia() {
+      if (data) {
+        await fetch('/api/media/addMedia', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+      }
+    }
+    postMedia()
+  }, [data])
+
+  useEffect(() => {
+    async function getMedia() {
+      const res = await fetch('/api/media/getMedia')
+      const data = await res.json()
+      const posts = data.posts
+      setDatabaseData(posts)
+    }
+    getMedia()
+  }, [])
 
   return (
     <NextUIProvider>
       <div className="container flex flex-col gap-16 p-4 mb-16">
-        {!isLoading && data && data.data ? (
-          data.data.map((post) => {
+        {!isLoading && data && data.data && databaseData ? (
+          databaseData.map((post) => {
             return (
               <Post
                 key={post.id}
-                postId={post.id}
+                postId={post.post_id}
                 username={post.username}
                 mediaType={post.media_type}
                 mediaUrl={post.media_url}

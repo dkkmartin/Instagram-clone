@@ -19,7 +19,7 @@ export async function GET(request: Request, response: Response) {
   try {
     const { data, error } = await supabase
       .from('users')
-      .select('liked')
+      .select('favourites')
       .eq('user_id', cookie.user_id)
 
     if (error) {
@@ -31,7 +31,7 @@ export async function GET(request: Request, response: Response) {
     return Response.json({
       code: 200,
       message: 'success',
-      liked: data[0].liked,
+      favourites: data[0].favourites,
     })
   } catch (error) {
     return Response.json({ code: 500, message: error.message })

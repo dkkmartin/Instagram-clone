@@ -31,7 +31,7 @@ export default function PostsLinks({ postId }) {
         </Button>
       </NavbarItem>
       <NavbarItem className="flex-3">
-        <SaveButton />
+        <SaveButton postId={postId} />
       </NavbarItem>
     </NavbarContent>
   )

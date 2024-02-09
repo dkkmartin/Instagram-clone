@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       chat: {
@@ -29,50 +29,59 @@ export interface Database {
           id: number
           media_type: string | null
           media_url: string | null
+          post_id: string
+          post_time: string
           timestamp: string | null
+          user_id: number | null
           username: string | null
         }
         Insert: {
-          id: number
+          id?: number
           media_type?: string | null
           media_url?: string | null
+          post_id: string
+          post_time?: string
           timestamp?: string | null
+          user_id?: number | null
           username?: string | null
         }
         Update: {
           id?: number
           media_type?: string | null
           media_url?: string | null
+          post_id?: string
+          post_time?: string
           timestamp?: string | null
+          user_id?: number | null
           username?: string | null
         }
         Relationships: []
       }
       users: {
         Row: {
-          comments: Json | null
-          favourites: Json | null
-          information: Json | null
+          comments: string[] | null
+          favourites: string[] | null
+          information: string[] | null
           liked: string[] | null
-          media_url: Json | null
+          media_url: string[] | null
           user_id: number
           user_name: string | null
         }
         Insert: {
-          comments?: Json | null
-          favourites?: Json | null
-          information?: Json | null
+          comments?: string[] | null
+          favourites?: string[] | null
+          information?: string[] | null
           liked?: string[] | null
-          media_url?: Json | null
+          media_url?: string[] | null
           user_id?: number
           user_name?: string | null
         }
         Update: {
-          comments?: Json | null
-          favourites?: Json | null
-          information?: Json | null
+          comments?: string[] | null
+          favourites?: string[] | null
+          information?: string[] | null
           liked?: string[] | null
-          media_url?: Json | null
+          media_url?: string[] | null
           user_id?: number
           user_name?: string | null
         }

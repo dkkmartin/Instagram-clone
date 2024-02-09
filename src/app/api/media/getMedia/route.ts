@@ -17,10 +17,7 @@ export async function GET(request: Request, response: Response) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
-    const { data, error } = await supabase
-      .from('users')
-      .select('liked')
-      .eq('user_id', cookie.user_id)
+    const { data, error } = await supabase.from('posts').select('*')
 
     if (error) {
       console.error(error)
@@ -31,7 +28,7 @@ export async function GET(request: Request, response: Response) {
     return Response.json({
       code: 200,
       message: 'success',
-      liked: data[0].liked,
+      posts: data,
     })
   } catch (error) {
     return Response.json({ code: 500, message: error.message })

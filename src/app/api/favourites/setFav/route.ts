@@ -6,10 +6,10 @@ const supabaseAnonKey = process.env.SUPABASE_KEY
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export async function POST(request: Request) {
-  async function fetchLikes() {
+  async function fetchFavourites() {
     const { data, error } = await supabase
       .from('users')
-      .select('liked')
+      .select('favourites')
       .eq('user_id', cookie.user_id)
 
     if (error) {
@@ -32,28 +32,28 @@ export async function POST(request: Request) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
-    const userData = await fetchLikes()
-    let liked = userData[0].liked
-    if (!Array.isArray(liked)) {
-      liked = []
+    const userData = await fetchFavourites()
+    let favourites = userData[0].favourites
+    if (!Array.isArray(favourites)) {
+      favourites = []
     }
 
-    const index = liked.indexOf(res.postId)
+    const index = favourites.indexOf(res.postId)
     let message: string, code: number
 
     if (index !== -1) {
-      liked = liked.filter((id) => id !== res.postId)
-      message = 'Post unliked'
-      code = 201 // Code for unliked
+      favourites = favourites.filter((id) => id !== res.postId)
+      message = 'Post removed from favourites'
+      code = 201 // Code for removed from favourites
     } else {
-      liked.push(res.postId)
-      message = 'Post liked'
-      code = 200 // Code for liked
+      favourites.push(res.postId)
+      message = 'Post added to favourites'
+      code = 200 // Code for added to favourites
     }
 
     const { error } = await supabase
       .from('users')
-      .update({ liked: liked })
+      .update({ favourites: favourites })
       .eq('user_id', cookie.user_id)
 
     if (error) throw error

@@ -42,6 +42,8 @@ export default function Post({ username, mediaType, mediaUrl, postId }) {
             src={mediaUrl}
             width={350}
             height={350}
+            unoptimized
+            priority
             alt=""
           ></Image>
         )}

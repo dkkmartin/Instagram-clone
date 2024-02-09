@@ -14,6 +14,5 @@ export default async function tokenHandler({ setIsLoading }) {
       secure: process.env.NODE_ENV !== 'development',
       sameSite: 'lax',
     })
-    console.log('token stored')
   }
 }
