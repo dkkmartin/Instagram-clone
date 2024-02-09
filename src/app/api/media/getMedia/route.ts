@@ -17,10 +17,7 @@ export async function GET(request: Request, response: Response) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .eq('user_id', cookie.user_id)
+    const { data, error } = await supabase.from('posts').select('*')
 
     if (error) {
       console.error(error)
