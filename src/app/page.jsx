@@ -51,10 +51,6 @@ export default function Home() {
     getMedia()
   }, [])
 
-  useEffect(() => {
-    console.log(databaseData)
-  }, [databaseData])
-
   return (
     <NextUIProvider>
       <div className="container flex flex-col gap-16 p-4 mb-16">
