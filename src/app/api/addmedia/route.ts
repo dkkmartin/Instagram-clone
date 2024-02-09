@@ -6,6 +6,11 @@ const supabaseAnonKey = process.env.SUPABASE_KEY
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export async function POST(request: Request) {
+  async function removePosts(id: number) {
+    const { error } = await supabase.from('posts').delete().eq('post_id', id)
+    if (error) throw error
+  }
+
   const req = await request.json()
   const cookies = request.headers
     .get('Cookie')
@@ -18,6 +23,24 @@ export async function POST(request: Request) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
+    const { data: userPosts, error } = await supabase
+      .from('posts')
+      .select('post_id')
+      .eq('user_id', cookie.user_id)
+    if (error) throw error
+    const userPostIds = userPosts.map((post: any) => post.post_id)
+    const requestPostIds = req.data.map((media: any) => media.id)
+    const postsToRemove = userPostIds.filter(
+      (id) => !requestPostIds.includes(id)
+    )
+    // Remove posts that are not in the request
+    if (postsToRemove.length > 0) {
+      postsToRemove.forEach(async (postId) => {
+        await removePosts(postId)
+      })
+    }
+
+    // Add new posts
     await Promise.all(
       req.data.map(async (media: any) => {
         const { error } = await supabase.from('posts').insert({
