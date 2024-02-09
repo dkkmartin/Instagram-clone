@@ -51,6 +51,10 @@ export default function Home() {
     getMedia()
   }, [])
 
+  useEffect(() => {
+    console.log(databaseData)
+  }, [databaseData])
+
   return (
     <NextUIProvider>
       <div className="container flex flex-col gap-16 p-4 mb-16">
@@ -59,7 +63,7 @@ export default function Home() {
             return (
               <Post
                 key={post.id}
-                postId={post.id}
+                postId={post.post_id}
                 username={post.username}
                 mediaType={post.media_type}
                 mediaUrl={post.media_url}
