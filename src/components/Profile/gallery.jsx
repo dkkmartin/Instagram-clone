@@ -24,6 +24,7 @@ export default function Gallery({ data }) {
                   alt=""
                   width={200}
                   height={200}
+                  priority
                 />
               ))}
             </section>
