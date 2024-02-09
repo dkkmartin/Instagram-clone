@@ -1,10 +1,9 @@
-import { createClient } from '@supabase/supabase-js'
-import { Database } from '../../../types/supabase'
+import { initSupabase } from '@/lib/supabaseClient'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
 
-const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
+const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export async function GET(request: Request, response: Response) {
   const cookies = request.headers

@@ -27,6 +27,7 @@ export type Database = {
       posts: {
         Row: {
           post_id: number
+          user_id: number | null
           media_type: string | null
           media_url: string | null
           timestamp: string | null
@@ -34,6 +35,7 @@ export type Database = {
         }
         Insert: {
           post_id: number
+          user_id?: number | null
           media_type?: string | null
           media_url?: string | null
           timestamp?: string | null
@@ -41,6 +43,7 @@ export type Database = {
         }
         Update: {
           post_id?: number
+          user_id?: number | null
           media_type?: string | null
           media_url?: string | null
           timestamp?: string | null

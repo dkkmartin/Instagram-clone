@@ -1,23 +1,12 @@
-import { createClient } from '@supabase/supabase-js'
-import { Database } from '../../types/supabase'
+import { initSupabase } from '@/lib/supabaseClient'
 
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
 
-const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey)
+const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export async function POST(request: Request) {
-  async function checkUser() {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('username')
-      .eq('username', req.data[0].username)
-    if (error) throw error
-    return data
-  }
-
   const req = await request.json()
-  console.log(await checkUser())
   const cookies = request.headers
     .get('Cookie')
     ?.split('; ')
@@ -33,9 +22,10 @@ export async function POST(request: Request) {
       req.data.map(async (media: any) => {
         const { error } = await supabase.from('posts').insert({
           post_id: media.id,
+          user_id: cookie.user_id,
           username: media.username,
-          media_type: media.type,
-          media_url: media.url,
+          media_type: media.media_type,
+          media_url: media.media_url,
           timestamp: media.timestamp,
         })
 
