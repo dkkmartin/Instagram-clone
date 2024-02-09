@@ -45,7 +45,7 @@ export default function Home() {
     async function getMedia() {
       const res = await fetch('/api/media/getMedia')
       const data = await res.json()
-      const posts = data.posts.reverse()
+      const posts = data.posts
       setDatabaseData(posts)
     }
     getMedia()
