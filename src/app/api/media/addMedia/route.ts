@@ -1,16 +1,18 @@
+// Import necessary modules and initialize supabase client
 import { initSupabase } from '@/lib/supabaseClient'
-
 const supabaseUrl = process.env.SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
-
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
+// Define your POST function
 export async function POST(request: Request) {
+  // Define the removePosts function for convenience
   async function removePosts(id: number) {
     const { error } = await supabase.from('posts').delete().eq('post_id', id)
     if (error) throw error
   }
 
+  // Parse the request and get cookies from headers
   const req = await request.json()
   const cookies = request.headers
     .get('Cookie')
@@ -23,24 +25,18 @@ export async function POST(request: Request) {
   const cookie = JSON.parse(cookies?.['token'])
 
   try {
-    const { data: userPosts, error } = await supabase
+    // Remove all posts that belong to the current user ID
+    const { error } = await supabase
       .from('posts')
-      .select('post_id')
+      .delete()
       .eq('user_id', cookie.user_id)
-    if (error) throw error
-    const userPostIds = userPosts.map((post: any) => post.post_id)
-    const requestPostIds = req.data.map((media: any) => media.id)
-    const postsToRemove = userPostIds.filter(
-      (id) => !requestPostIds.includes(id)
-    )
-    // Remove posts that are not in the request
-    if (postsToRemove.length > 0) {
-      postsToRemove.forEach(async (postId) => {
-        await removePosts(postId)
-      })
-    }
 
-    // Add new posts
+    if (error) throw error
+
+    // If there are errors, throw them
+    const requestPostIds = req.data.map((media: any) => media.id)
+
+    // Insert all new posts into the database
     await Promise.all(
       req.data.map(async (media: any) => {
         const { error } = await supabase.from('posts').insert({
@@ -52,6 +48,7 @@ export async function POST(request: Request) {
           timestamp: media.timestamp,
         })
 
+        // If there is an error, throw it
         if (error) throw error
       })
     )
