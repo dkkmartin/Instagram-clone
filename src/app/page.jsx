@@ -21,7 +21,6 @@ export default function Home() {
       if (!cookie) return
       const data = await getData(cookie.access_token)
       setData(data)
-      setIsLoading(false)
     }
     getMediaData()
   }, [setData])
@@ -47,6 +46,7 @@ export default function Home() {
       const data = await res.json()
       const posts = data.posts
       setDatabaseData(posts)
+      setIsLoading(false)
     }
     getMedia()
   }, [])
