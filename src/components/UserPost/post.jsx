@@ -1,11 +1,11 @@
 'use client'
 
 import './links.css'
-import { Navbar, NavbarContent, Avatar, image } from '@nextui-org/react'
+import { Navbar, NavbarContent, Avatar, Divider } from '@nextui-org/react'
 import PostsLinks from './post-links'
-import PostInfo from './post-info'
 import Image from 'next/image'
 import { imageLoader } from '../imageLoader'
+import Comment from './comment'
 
 export default function Post({ username, mediaType, mediaUrl, postId }) {
   return (
@@ -55,7 +55,15 @@ export default function Post({ username, mediaType, mediaUrl, postId }) {
           </NavbarContent>
         </Navbar>
       </article>
-      <PostInfo />
+
+      <section className="flex flex-col max-w-[350px] m-auto mb-4">
+        <Divider />
+        <Comment user={'@Peperino'} comment={'Nice'} />
+        <Comment user={'@Peperino'} comment={'Nice'} />
+        <Comment user={'@Peperino'} comment={'Nice'} />
+        <Comment user={'@Peperino'} comment={'Nice'} />
+        <Comment user={'@Peperino'} comment={'Nice'} />
+      </section>
     </section>
   )
 }
