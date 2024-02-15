@@ -67,9 +67,7 @@ export default function Home() {
                 username={post.username}
                 mediaType={post.media_type}
                 mediaUrl={post.media_url}
-                comments={
-                  post.comments && post.comments.length > 0 ? post.comments : []
-                }
+                comments={post.comments ? post.comments : []}
               />
             )
           })

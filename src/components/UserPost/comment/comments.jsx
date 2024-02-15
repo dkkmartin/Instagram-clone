@@ -19,6 +19,7 @@ export default function Comments({ comments }) {
 
       {comments.length > 1 && (
         <>
+          <Comment user={comments[0].user} comment={comments[0].comment} />
           {showComments &&
             comments
               .slice(1)
