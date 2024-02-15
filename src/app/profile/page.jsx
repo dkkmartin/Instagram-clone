@@ -8,10 +8,6 @@ import { Avatar, Spinner } from '@nextui-org/react'
 export default function Profile() {
   const { data } = useData()
 
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <>
       {!data ? (
