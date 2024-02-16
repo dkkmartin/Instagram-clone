@@ -15,11 +15,12 @@ export async function POST(request: Request) {
       return prev
     }, {} as Record<string, string>)
   const cookie = JSON.parse(cookies?.['token'])
+  const usernameCookie = cookies?.['username']
 
   try {
     const { error } = await supabase
       .from('users')
-      .insert({ user_id: cookie.user_id })
+      .insert({ user_id: cookie.user_id, user_name: usernameCookie })
 
     if (error) throw error
     return Response.json({ code: 200, message: 'success' })
