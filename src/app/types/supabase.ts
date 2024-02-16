@@ -26,6 +26,7 @@ export type Database = {
       }
       posts: {
         Row: {
+          comments: Json[] | null
           id: number
           media_type: string | null
           media_url: string | null
@@ -36,6 +37,7 @@ export type Database = {
           username: string | null
         }
         Insert: {
+          comments?: Json[] | null
           id?: number
           media_type?: string | null
           media_url?: string | null
@@ -46,6 +48,7 @@ export type Database = {
           username?: string | null
         }
         Update: {
+          comments?: Json[] | null
           id?: number
           media_type?: string | null
           media_url?: string | null
