@@ -15,7 +15,6 @@ export default async function tokenHandler({ setIsLoading }) {
     setIsLoading(true)
     const data = await getToken(CODE)
     const username = await getUsername(data.access_token)
-    console.log(username)
     const dataStr = JSON.stringify(data)
     Cookies.set('token', dataStr, {
       expires: 1,

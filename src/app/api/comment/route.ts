@@ -6,8 +6,16 @@ const supabaseAnonKey = process.env.SUPABASE_KEY
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export async function POST(request: Request) {
-  const cookies = request.headers.get('Cookie')
+  const cookies = request.headers
+    .get('Cookie')
+    ?.split('; ')
+    .reduce((prev, curr) => {
+      const [key, value] = curr.split('=')
+      prev[key] = decodeURIComponent(value)
+      return prev
+    }, {} as Record<string, string>)
   const usernameCookie = cookies?.['username']
+
   // Fetch current comments
   async function fetchComments() {
     const { data, error } = await supabase
