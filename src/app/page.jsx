@@ -64,9 +64,7 @@ export default function Home() {
 
             return {
               ...post,
-              comments: post.comments
-                ? [...post.comments, ...data.comments]
-                : [...data.comments], // add the elements of the new data to the existing comments
+              comments: data.comments,
             }
           } else {
             // This is not the post we want to change. Return it as is.
