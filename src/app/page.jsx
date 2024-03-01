@@ -43,23 +43,39 @@ export default function Home() {
 
   useEffect(() => {
     function handleNewData(data) {
+      // Check if newComment is not empty
+      if (
+        Object.keys(newComment).length === 0 &&
+        newComment.constructor === Object
+      ) {
+        return
+      }
+
       setDatabaseData((prev) => {
+        // Check if the new comment belongs to one of the posts
+        const postExists = prev.some((post) => post.post_id === data.post_id)
+        if (!postExists) {
+          return prev
+        }
+
         const newState = prev.map((post) => {
           if (post.post_id === data.post_id) {
             // This is the post we want to change. Update its comments.
-            console.log('Updating post', data)
+
             return {
               ...post,
               comments: post.comments
-                ? [...post.comments, newComment]
-                : [newComment], // add the newComment to the existing comments
+                ? [...post.comments, ...data.comments]
+                : [...data.comments], // add the elements of the new data to the existing comments
             }
           } else {
             // This is not the post we want to change. Return it as is.
-            console.log('Not updating post', post)
+
             return post
           }
         })
+
+        return newState
       })
     }
 

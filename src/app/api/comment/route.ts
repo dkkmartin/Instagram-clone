@@ -38,6 +38,11 @@ export async function POST(request: Request) {
 
   const res = await request.json()
 
+  // Check if the comment is empty
+  if (!res.comment || res.comment.trim() === '') {
+    return Response.json({ code: 400, message: 'Comment cannot be empty' })
+  }
+
   try {
     // Get current comments
     const currentComments = await fetchComments()
