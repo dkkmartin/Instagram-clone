@@ -17,24 +17,42 @@ export default function Home() {
   const { data, setData } = useData()
   const [databaseData, setDatabaseData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [newComment, setNewComment] = useState([])
 
   useEffect(() => {
     console.log(databaseData)
   }, [databaseData])
 
   useEffect(() => {
-    console.log('useEffect called')
-    function handleNewData(payload) {
-      const newPost = payload.new
+    const channels = supabase
+      .channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'posts' },
+        (payload) => {
+          setNewComment(payload.new)
+        }
+      )
+      .subscribe()
 
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => {
+      channels.unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    function handleNewData(data) {
       setDatabaseData((prev) => {
-        return prev.map((post) => {
-          if (post.post_id === newPost.post_id) {
-            // This is the post we want to change. Replace it with the new data.
-            console.log('Updating post', newPost)
+        const newState = prev.map((post) => {
+          if (post.post_id === data.post_id) {
+            // This is the post we want to change. Update its comments.
+            console.log('Updating post', data)
             return {
-              ...newPost,
-              comments: newPost.comments, // update the comments
+              ...post,
+              comments: post.comments
+                ? [...post.comments, newComment]
+                : [newComment], // add the newComment to the existing comments
             }
           } else {
             // This is not the post we want to change. Return it as is.
@@ -45,23 +63,8 @@ export default function Home() {
       })
     }
 
-    const channels = supabase
-      .channel('custom-all-channel')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'posts' },
-        (payload) => {
-          console.log('Change received!', payload)
-          // handleNewData(payload)
-        }
-      )
-      .subscribe()
-
-    // Cleanup function to unsubscribe when the component unmounts
-    return () => {
-      channels.unsubscribe()
-    }
-  }, [])
+    handleNewData(newComment)
+  }, [newComment])
 
   useEffect(() => {
     const getMediaData = async () => {
