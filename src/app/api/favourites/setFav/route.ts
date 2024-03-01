@@ -1,6 +1,6 @@
 import { initSupabase } from '@/lib/supabaseClient'
 
-const supabaseUrl = process.env.SUPABASE_URL
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
 
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
@@ -44,11 +44,11 @@ export async function POST(request: Request) {
     if (index !== -1) {
       favourites = favourites.filter((id) => id !== res.postId)
       message = 'Post removed from favourites'
-      code = 201 // Code for removed from favourites
+      code = 201
     } else {
       favourites.push(res.postId)
       message = 'Post added to favourites'
-      code = 200 // Code for added to favourites
+      code = 200
     }
 
     const { error } = await supabase

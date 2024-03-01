@@ -6,11 +6,81 @@ import { NextUIProvider, Spinner } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useData } from '@/stores/useMediaStore'
+import { initSupabase } from '@/lib/supabaseClient'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export default function Home() {
   const { data, setData } = useData()
   const [databaseData, setDatabaseData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [newComment, setNewComment] = useState([])
+
+  useEffect(() => {
+    console.log(databaseData)
+  }, [databaseData])
+
+  useEffect(() => {
+    const channels = supabase
+      .channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'posts' },
+        (payload) => {
+          setNewComment(payload.new)
+        }
+      )
+      .subscribe()
+
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => {
+      channels.unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    function handleNewData(data) {
+      // Check if newComment is not empty
+      if (
+        Object.keys(newComment).length === 0 &&
+        newComment.constructor === Object
+      ) {
+        return
+      }
+
+      setDatabaseData((prev) => {
+        // Check if the new comment belongs to one of the posts
+        const postExists = prev.some((post) => post.post_id === data.post_id)
+        if (!postExists) {
+          return prev
+        }
+
+        const newState = prev.map((post) => {
+          if (post.post_id === data.post_id) {
+            // This is the post we want to change. Update its comments.
+
+            return {
+              ...post,
+              comments: post.comments
+                ? [...post.comments, ...data.comments]
+                : [...data.comments], // add the elements of the new data to the existing comments
+            }
+          } else {
+            // This is not the post we want to change. Return it as is.
+
+            return post
+          }
+        })
+
+        return newState
+      })
+    }
+
+    handleNewData(newComment)
+  }, [newComment])
 
   useEffect(() => {
     const getMediaData = async () => {

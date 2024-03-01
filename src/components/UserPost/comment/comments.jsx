@@ -13,7 +13,7 @@ export default function Comments({ comments }) {
 
   return (
     <>
-      {comments === 1 ? (
+      {comments.length === 1 ? (
         <Comment user={comments[0].user} comment={comments[0].comment} />
       ) : null}
 
