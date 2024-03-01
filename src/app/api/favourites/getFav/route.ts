@@ -1,6 +1,6 @@
 import { initSupabase } from '@/lib/supabaseClient'
 
-const supabaseUrl = process.env.SUPABASE_URL
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.SUPABASE_KEY
 
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)

@@ -6,11 +6,62 @@ import { NextUIProvider, Spinner } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useData } from '@/stores/useMediaStore'
+import { initSupabase } from '@/lib/supabaseClient'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
 export default function Home() {
   const { data, setData } = useData()
   const [databaseData, setDatabaseData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    console.log(databaseData)
+  }, [databaseData])
+
+  useEffect(() => {
+    console.log('useEffect called')
+    function handleNewData(payload) {
+      const newPost = payload.new
+
+      setDatabaseData((prev) => {
+        return prev.map((post) => {
+          if (post.post_id === newPost.post_id) {
+            // This is the post we want to change. Replace it with the new data.
+            console.log('Updating post', newPost)
+            return {
+              ...newPost,
+              comments: newPost.comments, // update the comments
+            }
+          } else {
+            // This is not the post we want to change. Return it as is.
+            console.log('Not updating post', post)
+            return post
+          }
+        })
+      })
+    }
+
+    const channels = supabase
+      .channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'posts' },
+        (payload) => {
+          console.log('Change received!', payload)
+          // handleNewData(payload)
+        }
+      )
+      .subscribe()
+
+    // Cleanup function to unsubscribe when the component unmounts
+    return () => {
+      channels.unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     const getMediaData = async () => {
