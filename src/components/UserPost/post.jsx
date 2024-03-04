@@ -1,7 +1,8 @@
 'use client'
 
 import './links.css'
-import { useState } from 'react'
+import React from 'react'
+import { useEffect, useState } from 'react'
 import {
   Navbar,
   NavbarContent,
@@ -14,6 +15,7 @@ import PostsLinks from './post-links'
 import Image from 'next/image'
 import { imageLoader } from '../imageLoader'
 import Comments from './comment/comments'
+import ReactPlayer from 'react-player/file'
 
 export default function Post({
   username,
@@ -43,6 +45,10 @@ export default function Post({
     }
   }
 
+  useEffect(() => {
+    console.log(mediaUrl)
+  }, [mediaUrl])
+
   return (
     <section className="rounded-xl shadow-large">
       <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto py-2">
@@ -60,15 +66,15 @@ export default function Post({
       </div>
       <div className="flex justify-center">
         {mediaType === 'VIDEO' ? (
-          <iframe
-            className="rounded-lg"
-            src={mediaUrl}
-            allowFullScreen
-            controls
+          <ReactPlayer
+            url={mediaUrl}
+            muted={true}
+            controls={true}
             width={350}
             height={350}
-          ></iframe>
-        ) : (
+            loop={true}
+          />
+        ) : mediaType === 'CAROUSEL_ALBUM' ? null : (
           <Image
             loader={imageLoader}
             src={mediaUrl}
@@ -94,7 +100,7 @@ export default function Post({
 
       <section className="flex flex-col max-w-[350px] m-auto mb-4">
         {isCommentClicked ? (
-          <div className="flex gap-2 items-center h-full">
+          <div className="flex gap-2 items-center h-full mb-4">
             <Input
               className="h-full rounded-tl-3xl"
               type="text"
