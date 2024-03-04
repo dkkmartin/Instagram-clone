@@ -2,6 +2,7 @@ import { Image, Spinner, Tabs, Tab } from '@nextui-org/react'
 import NextImage from 'next/image'
 import { useEffect, useState } from 'react'
 import ReactPlayer from 'react-player/file'
+import { imageLoader } from '../imageLoader'
 
 export default function Gallery({ data }) {
   const [favsID, setFavsID] = useState([])
@@ -50,6 +51,7 @@ export default function Gallery({ data }) {
             <section className="grid grid-cols-3 gap-2">
               {photos.map((post) => (
                 <Image
+                  loader={imageLoader}
                   as={NextImage}
                   key={post.id}
                   src={post.media_url}
@@ -84,6 +86,7 @@ export default function Gallery({ data }) {
                     return post.media_type === 'IMAGE' ||
                       post.media_type === 'CAROUSEL_ALBUM' ? (
                       <Image
+                        loader={imageLoader}
                         as={NextImage}
                         key={post.id}
                         src={post.media_url}
