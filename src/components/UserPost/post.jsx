@@ -45,10 +45,6 @@ export default function Post({
     }
   }
 
-  useEffect(() => {
-    console.log(mediaUrl)
-  }, [mediaUrl])
-
   return (
     <section className="rounded-xl shadow-large">
       <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto py-2">
@@ -74,7 +70,7 @@ export default function Post({
             height={350}
             loop={true}
           />
-        ) : mediaType === 'CAROUSEL_ALBUM' ? null : (
+        ) : (
           <Image
             loader={imageLoader}
             src={mediaUrl}

@@ -1,9 +1,41 @@
 import { Image, Spinner, Tabs, Tab } from '@nextui-org/react'
 import NextImage from 'next/image'
+import { useEffect, useState } from 'react'
+import ReactPlayer from 'react-player/file'
 
 export default function Gallery({ data }) {
+  const [favsID, setFavsID] = useState([])
+  const [favsPost, setFavsPost] = useState([])
   const photos = data?.data.filter((post) => post.media_type !== 'VIDEO') || []
   const videos = data?.data.filter((post) => post.media_type === 'VIDEO') || []
+
+  useEffect(() => {
+    async function getFavs() {
+      const res = await fetch('/api/favourites/getFav')
+      const data = await res.json()
+      setFavsID(data.favourites)
+    }
+    getFavs()
+  }, [])
+
+  useEffect(() => {
+    async function getMedia() {
+      favsID.forEach(async (id) => {
+        const res = await fetch(`/api/media/getSpecific?id=${id}`)
+        const data = await res.json()
+        setFavsPost((prev) => {
+          if (prev.some((post) => post.post_id === data.post[0].post_id))
+            return prev
+          return [...prev, data.post[0]]
+        })
+      })
+    }
+    getMedia()
+  }, [favsID])
+
+  useEffect(() => {
+    console.log(favsPost)
+  })
 
   return (
     <>
@@ -31,21 +63,49 @@ export default function Gallery({ data }) {
           </Tab>
           <Tab key="videos" title="Videos">
             <section className="grid grid-cols-3 gap-2">
-              {videos.map((post) => (
-                <div
-                  key={post.id}
-                  className="border border-black max-w-[200px] max-h-[200px]"
-                >
-                  <iframe
-                    src={post.media_url}
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
+              {videos.map((post, index) => (
+                <ReactPlayer
+                  key={index}
+                  url={post.media_url}
+                  muted={true}
+                  controls={true}
+                  width={200}
+                  height={200}
+                  loop={true}
+                />
               ))}
             </section>
           </Tab>
           <Tab key="favourite" title="Favourite">
-            {/* Hvis favourite her */}
+            <section className="grid grid-cols-3 gap-2">
+              {favsPost &&
+                favsPost.map((post) => {
+                  {
+                    return post.media_type === 'IMAGE' ||
+                      post.media_type === 'CAROUSEL_ALBUM' ? (
+                      <Image
+                        as={NextImage}
+                        key={post.id}
+                        src={post.media_url}
+                        alt=""
+                        width={200}
+                        height={200}
+                        priority
+                      />
+                    ) : (
+                      <ReactPlayer
+                        key={post.id}
+                        url={post.media_url}
+                        muted={true}
+                        controls={true}
+                        width={134}
+                        height={134}
+                        loop={true}
+                      />
+                    )
+                  }
+                })}
+            </section>
           </Tab>
         </Tabs>
       </div>
