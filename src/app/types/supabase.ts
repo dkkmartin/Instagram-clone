@@ -28,6 +28,7 @@ export type Database = {
         Row: {
           comments: Json[] | null
           id: number
+          likes: number
           media_type: string | null
           media_url: string | null
           post_id: string
@@ -39,6 +40,7 @@ export type Database = {
         Insert: {
           comments?: Json[] | null
           id?: number
+          likes?: number
           media_type?: string | null
           media_url?: string | null
           post_id: string
@@ -50,6 +52,7 @@ export type Database = {
         Update: {
           comments?: Json[] | null
           id?: number
+          likes?: number
           media_type?: string | null
           media_url?: string | null
           post_id?: string
