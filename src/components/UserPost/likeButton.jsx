@@ -1,9 +1,11 @@
 'use client'
 
+import { useThemeStore } from '@/stores/useThemeStore'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function LikeButton({ postId }) {
+  const theme = useThemeStore((state) => state.themeStore)
   const [isClicked, setIsClicked] = useState(false)
   const [liked, setLiked] = useState([])
 
@@ -78,7 +80,11 @@ export default function LikeButton({ postId }) {
       ) : (
         <Image
           onClick={handleClick}
-          src="/MaterialSymbolsFavoriteBlack.svg"
+          src={
+            theme === 'dark'
+              ? '/MaterialSymbolsFavoriteWhite.svg'
+              : '/MaterialSymbolsFavoriteBlack.svg'
+          }
           alt=""
           width={30}
           height={30}

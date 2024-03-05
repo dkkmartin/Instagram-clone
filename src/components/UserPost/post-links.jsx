@@ -5,12 +5,14 @@ import { NavbarItem, Button, NavbarContent } from '@nextui-org/react'
 import LikeButton from './likeButton'
 import SaveButton from './saveButton'
 import CommentButton from './commentButton'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 export default function PostsLinks({
   postId,
   isCommentClicked,
   setIsCommentClicked,
 }) {
+  const theme = useThemeStore((state) => state.themeStore)
   return (
     <div className="flex flex-col w-full ">
       <NavbarContent className="flex gap-0">
@@ -29,7 +31,11 @@ export default function PostsLinks({
         <NavbarItem className="flex-1">
           <Button isIconOnly color="none">
             <Image
-              src={'/ForwardIcon.svg'}
+              src={
+                theme === 'dark'
+                  ? '/BitcoinIconsShareFilledWhite.svg'
+                  : '/BitcoinIconsShareFilledBlack.svg'
+              }
               alt=""
               width={30}
               height={30}

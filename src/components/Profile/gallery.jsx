@@ -21,15 +21,16 @@ export default function Gallery({ data }) {
 
   useEffect(() => {
     async function getMedia() {
-      favsID.forEach(async (id) => {
-        const res = await fetch(`/api/media/getSpecific?id=${id}`)
-        const data = await res.json()
-        setFavsPost((prev) => {
-          if (prev.some((post) => post.post_id === data.post[0].post_id))
-            return prev
-          return [...prev, data.post[0]]
+      favsID &&
+        favsID.forEach(async (id) => {
+          const res = await fetch(`/api/media/getSpecific?id=${id}`)
+          const data = await res.json()
+          setFavsPost((prev) => {
+            if (prev.some((post) => post.post_id === data.post[0].post_id))
+              return prev
+            return [...prev, data.post[0]]
+          })
         })
-      })
     }
     getMedia()
   }, [favsID])

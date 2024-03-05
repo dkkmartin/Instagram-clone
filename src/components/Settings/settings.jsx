@@ -12,8 +12,12 @@ import {
 import { useDisclosure } from '@nextui-org/react'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
+import { Providers } from '@/app/providers'
+import { ThemeSwitcher } from './ThemeSwitcher'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 export default function Settings() {
+  const theme = useThemeStore((state) => state.themeStore)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const clearTokenCookie = () => {
@@ -25,7 +29,11 @@ export default function Settings() {
     <>
       <Button isIconOnly onPress={onOpen} color="none">
         <Image
-          src={'/MaterialSymbolsSettingsOutline.svg'}
+          src={
+            theme === 'dark'
+              ? '/MaterialSymbolsSettingsOutlineWhite.svg'
+              : '/MaterialSymbolsSettingsOutlineBlack.svg'
+          }
           height={30}
           width={30}
           alt="Settings"
@@ -67,7 +75,9 @@ export default function Settings() {
               </ModalHeader>
               <ModalBody>
                 <Button color="primary">Edit Profile</Button>
-
+                <Providers>
+                  <ThemeSwitcher />
+                </Providers>
                 <Button onClick={clearTokenCookie} color="danger">
                   Log out
                 </Button>

@@ -2,11 +2,12 @@
 
 import Post from '@/components/UserPost/post'
 import getData from '@/lib/getData'
-import { NextUIProvider, Spinner } from '@nextui-org/react'
+import { Spinner } from '@nextui-org/react'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useData } from '@/stores/useMediaStore'
 import { initSupabase } from '@/lib/supabaseClient'
+import { Providers } from './providers'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -120,29 +121,31 @@ export default function Home() {
   }, [])
 
   return (
-    <NextUIProvider>
-      <div className="container flex flex-col gap-16 p-4 mb-16">
-        {!isLoading && data && data.data && databaseData ? (
-          databaseData.map((post) => {
-            return (
-              <Post
-                key={post.id}
-                postId={post.post_id}
-                username={post.username}
-                mediaType={post.media_type}
-                mediaUrl={post.media_url}
-                comments={post.comments ? post.comments : []}
-              />
-            )
-          })
-        ) : (
-          <>
-            <div className="flex justify-center items-center h-screen">
-              <Spinner size="lg" color="primary" />
-            </div>
-          </>
-        )}
-      </div>
-    </NextUIProvider>
+    <Providers>
+      <main>
+        <div className="container flex flex-col gap-16 p-4 mb-16">
+          {!isLoading && data && data.data && databaseData ? (
+            databaseData.map((post) => {
+              return (
+                <Post
+                  key={post.id}
+                  postId={post.post_id}
+                  username={post.username}
+                  mediaType={post.media_type}
+                  mediaUrl={post.media_url}
+                  comments={post.comments ? post.comments : []}
+                />
+              )
+            })
+          ) : (
+            <>
+              <div className="flex justify-center items-center h-screen">
+                <Spinner size="lg" color="primary" />
+              </div>
+            </>
+          )}
+        </div>
+      </main>
+    </Providers>
   )
 }

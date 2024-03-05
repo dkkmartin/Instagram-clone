@@ -5,9 +5,11 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import Settings from './settings'
+import Settings from '../Settings/settings'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 export default function PrimaryNavbar() {
+  const theme = useThemeStore((state) => state.themeStore)
   const pathname = usePathname()
   const [onLoginRoute, setOnLoginRoute] = useState(pathname === '/login')
 
@@ -23,7 +25,7 @@ export default function PrimaryNavbar() {
     return null
   } else {
     return (
-      <header className=" fixed z-40 bottom-0 w-full border-t">
+      <header className=" fixed z-40 bottom-0 w-full">
         <Navbar>
           <NavbarContent
             className="sm:flex gap-4 w-full justify-between"
@@ -31,11 +33,32 @@ export default function PrimaryNavbar() {
           >
             <Link href={'/'}>
               <Button isIconOnly color="none">
+                <div className="text-white">
+                  <Image
+                    src={
+                      theme === 'dark'
+                        ? '/MaterialSymbolsHouseOutlineWhite.svg'
+                        : '/MaterialSymbolsHouseOutlineBlack.svg'
+                    }
+                    width={30}
+                    height={30}
+                    alt="Home"
+                  ></Image>
+                </div>
+              </Button>
+            </Link>
+
+            <Link href={'/'}>
+              <Button isIconOnly color="none">
                 <Image
-                  src={'/MaterialSymbolsHouse.svg'}
+                  src={
+                    theme === 'dark'
+                      ? '/MaterialSymbolsChatBubbleOutlineWhite.svg'
+                      : '/MaterialSymbolsChatBubbleOutlineBlack.svg'
+                  }
                   width={30}
                   height={30}
-                  alt=""
+                  alt="Chat"
                 ></Image>
               </Button>
             </Link>
@@ -43,21 +66,14 @@ export default function PrimaryNavbar() {
             <Link href={'/'}>
               <Button isIconOnly color="none">
                 <Image
-                  src={'/MaterialSymbolsSearch.svg'}
+                  src={
+                    theme === 'dark'
+                      ? '/MaterialSymbolsAddCircleOutlineWhite.svg'
+                      : '/MaterialSymbolsAddCircleOutlineBlack.svg'
+                  }
                   width={30}
                   height={30}
-                  alt=""
-                ></Image>
-              </Button>
-            </Link>
-
-            <Link href={'/'}>
-              <Button isIconOnly color="none">
-                <Image
-                  src={'/MaterialSymbolsAddCircle.svg'}
-                  width={30}
-                  height={30}
-                  alt=""
+                  alt="New post"
                 ></Image>
               </Button>
             </Link>
@@ -65,10 +81,14 @@ export default function PrimaryNavbar() {
             <Link href={'/profile'}>
               <Button isIconOnly color="none">
                 <Image
-                  src={'/MaterialSymbolsAccountCircle.svg'}
+                  src={
+                    theme === 'dark'
+                      ? '/MaterialSymbolsAccountCircleWhite.svg'
+                      : '/MaterialSymbolsAccountCircleBlack.svg'
+                  }
                   width={30}
                   height={30}
-                  alt=""
+                  alt="Profile"
                 ></Image>
               </Button>
             </Link>

@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { imageLoader } from '../imageLoader'
 import Comments from './comment/comments'
 import ReactPlayer from 'react-player/file'
+import { useThemeStore } from '@/stores/useThemeStore'
 
 export default function Post({
   username,
@@ -26,6 +27,7 @@ export default function Post({
 }) {
   const [isCommentClicked, setIsCommentClicked] = useState(false)
   const [comment, setComment] = useState('')
+  const theme = useThemeStore((state) => state.themeStore)
 
   async function submitComment() {
     await fetch(`/api/comment/`, {
@@ -52,13 +54,18 @@ export default function Post({
         <h4 className="flex-1">
           <strong>{username}</strong>
         </h4>
+
         <Image
           className="flex-3"
-          src={'/MoreIcon.svg'}
-          alt=""
+          src={
+            theme === 'dark'
+              ? '/MaterialSymbolsMoreHorizWhite.svg'
+              : '/MaterialSymbolsMoreHorizBlack.svg'
+          }
+          alt="More"
           width={30}
           height={30}
-        ></Image>
+        />
       </div>
       <div className="flex justify-center">
         {mediaType === 'VIDEO' ? (

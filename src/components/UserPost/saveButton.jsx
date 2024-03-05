@@ -1,7 +1,9 @@
+import { useThemeStore } from '@/stores/useThemeStore'
 import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 
 export default function SaveButton({ postId }) {
+  const theme = useThemeStore((state) => state.themeStore)
   const [isClicked, setIsClicked] = useState(false)
   const [favourites, setFavourites] = useState([])
 
@@ -80,7 +82,11 @@ export default function SaveButton({ postId }) {
       ) : (
         <Image
           onClick={handleClick}
-          src="/MaterialSymbolsBookmarkAdd.svg"
+          src={
+            theme === 'dark'
+              ? '/MaterialSymbolsBookmarkAddWhite.svg'
+              : '/MaterialSymbolsBookmarkAddBlack.svg'
+          }
           alt=""
           width={30}
           height={30}
