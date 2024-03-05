@@ -2,15 +2,8 @@
 
 import './links.css'
 import React from 'react'
-import { useEffect, useState } from 'react'
-import {
-  Navbar,
-  NavbarContent,
-  Avatar,
-  Divider,
-  Input,
-  Button,
-} from '@nextui-org/react'
+import { useState } from 'react'
+import { Navbar, NavbarContent, Avatar, Input, Button } from '@nextui-org/react'
 import PostsLinks from './post-links'
 import Image from 'next/image'
 import { imageLoader } from '../imageLoader'
@@ -48,7 +41,7 @@ export default function Post({
   }
 
   return (
-    <section className="rounded-xl shadow-large">
+    <section className="rounded-xl shadow-large border">
       <div className="flex gap-2 items-center mb-1 max-w-[350px] m-auto py-2">
         <Avatar className="flex-0 mt-1" src="https://i.pravatar.cc/150" />
         <h4 className="flex-1">
@@ -101,9 +94,9 @@ export default function Post({
         </Navbar>
       </article>
 
-      <section className="flex flex-col max-w-[350px] m-auto mb-4">
+      <section className="flex flex-col">
         {isCommentClicked ? (
-          <div className="flex gap-2 items-center h-full mb-4">
+          <div className="flex gap-2 w-full max-w-[350px] m-auto h-full mb-4">
             <Input
               className="h-full rounded-tl-3xl"
               type="text"
@@ -123,7 +116,7 @@ export default function Post({
             </Button>
           </div>
         ) : null}
-        <Divider />
+
         <Comments comments={comments} />
       </section>
     </section>

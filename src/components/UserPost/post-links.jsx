@@ -14,7 +14,7 @@ export default function PostsLinks({
 }) {
   const theme = useThemeStore((state) => state.themeStore)
   return (
-    <div className="flex flex-col w-full ">
+    <div className="flex flex-col w-full">
       <NavbarContent className="flex gap-0">
         <NavbarItem className="flex-0">
           <Button isIconOnly color="none">

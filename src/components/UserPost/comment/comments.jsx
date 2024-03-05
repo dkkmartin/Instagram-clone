@@ -30,10 +30,17 @@ export default function Comments({ comments }) {
                   comment={comment.comment}
                 />
               ))}
-          <Button className="mt-4" variant="ghost" onClick={handleClick}>
+          <Button
+            className=" rounded-bl-xl rounded-br-xl"
+            variant="flat"
+            radius="none"
+            onClick={handleClick}
+          >
             {showComments
               ? 'Hide comments'
-              : 'Show ' + (comments.length - 1) + ' comments'}
+              : 'Show ' +
+                (comments.length - 1) +
+                (comments.length - 1 === 1 ? ' comment' : ' comments')}
           </Button>
         </>
       )}

@@ -1,10 +1,10 @@
 'use client'
 
-import { User, Divider } from '@nextui-org/react'
+import { User } from '@nextui-org/react'
 
 export default function Comment({ comment, user }) {
   return (
-    <div className="border rounded-lg flex flex-col gap-2 w-full bg-slate-50 px-4 py-1 mt-4">
+    <div className="border-t border-b flex flex-col gap-2 px-4 py-1">
       <User
         className="font-bold justify-start"
         avatarProps={{
@@ -12,8 +12,7 @@ export default function Comment({ comment, user }) {
         }}
         name={user}
       />
-      <Divider orientation="vertical" />
-      <p className="text-sm">{comment}</p>
+      <p className="text-sm pl-12">{comment}</p>
     </div>
   )
 }
