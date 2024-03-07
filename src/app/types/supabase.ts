@@ -13,14 +13,20 @@ export type Database = {
         Row: {
           created_at: string
           id: number
+          message: string | null
+          user: string
         }
         Insert: {
           created_at?: string
           id?: number
+          message?: string | null
+          user: string
         }
         Update: {
           created_at?: string
           id?: number
+          message?: string | null
+          user?: string
         }
         Relationships: []
       }
@@ -70,6 +76,7 @@ export type Database = {
           information: string[] | null
           liked: string[] | null
           media_url: string[] | null
+          online: boolean | null
           user_id: number
           user_name: string | null
         }
@@ -79,6 +86,7 @@ export type Database = {
           information?: string[] | null
           liked?: string[] | null
           media_url?: string[] | null
+          online?: boolean | null
           user_id?: number
           user_name?: string | null
         }
@@ -88,6 +96,7 @@ export type Database = {
           information?: string[] | null
           liked?: string[] | null
           media_url?: string[] | null
+          online?: boolean | null
           user_id?: number
           user_name?: string | null
         }
