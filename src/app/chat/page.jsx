@@ -11,8 +11,9 @@ import {
 } from '@nextui-org/react'
 import { Providers } from '../providers'
 import Bubble from '@/components/Chat/bubble'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { initSupabase } from '@/lib/supabaseClient'
+import Cookies from 'js-cookie'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -23,6 +24,13 @@ export default function ChatPage() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
+  const [newMessage, setNewMessage] = useState({})
+  const userCookie = Cookies.get('username')
+  const messagesEndRef = useRef(null)
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
 
   useEffect(() => {
     const channels = supabase
@@ -32,6 +40,7 @@ export default function ChatPage() {
         { event: '*', schema: 'public', table: 'chat' },
         (payload) => {
           console.log(payload.new)
+          setNewMessage(payload.new)
         }
       )
       .subscribe()
@@ -41,6 +50,10 @@ export default function ChatPage() {
       channels.unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    setMessages((prev) => [...prev, newMessage])
+  }, [newMessage])
 
   useEffect(() => {
     async function getMessages() {
@@ -74,7 +87,7 @@ export default function ChatPage() {
   return (
     <Providers>
       <header className="flex justify-between w-full p-4 shadow-xl">
-        <h1 className="text-2xl font-semibold">Online</h1>
+        <h1 className="text-2xl font-semibold">Chat</h1>
         <AvatarGroup isBordered max={5}>
           <Tooltip content="@peperino1995">
             <Avatar src="https://i.pravatar.cc/151" />
@@ -97,18 +110,31 @@ export default function ChatPage() {
         </AvatarGroup>
       </header>
       <main className="flex flex-col justify-between h-[calc(100dvh-(72px+64px))]">
-        <section className="py-2">
+        <section className="py-2 flex flex-col gap-2 overflow-scroll">
           {loading && messages ? (
             <Spinner size="lg" />
           ) : (
-            messages.map((message, index) => (
-              <Bubble
-                key={index}
-                message={message.message}
-                user={message.user}
-              />
-            ))
+            messages
+              .sort((a, b) => new Date(a.created_at) - new Date(b.created_at))
+              .map((message, index) =>
+                message.user === userCookie ? (
+                  <Bubble
+                    key={index}
+                    message={message.message}
+                    user={message.user}
+                    isMe={true}
+                  />
+                ) : (
+                  <Bubble
+                    key={index}
+                    message={message.message}
+                    user={message.user}
+                    isMe={false}
+                  />
+                )
+              )
           )}
+          <div ref={messagesEndRef} />
         </section>
         <section className="flex gap-2 mb-2">
           <Input
