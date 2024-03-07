@@ -2,14 +2,14 @@
 
 import { useData } from '@/stores/useMediaStore'
 import Gallery from '@/components/Profile/gallery'
-import { useEffect } from 'react'
 import { Avatar, Spinner } from '@nextui-org/react'
+import { Providers } from '../providers'
 
 export default function Profile() {
   const { data } = useData()
 
   return (
-    <>
+    <Providers>
       {!data ? (
         <div className="flex justify-center items-center h-screen">
           <Spinner size="lg" color="primary" />
@@ -27,6 +27,6 @@ export default function Profile() {
           <Gallery data={data} />
         </section>
       )}
-    </>
+    </Providers>
   )
 }

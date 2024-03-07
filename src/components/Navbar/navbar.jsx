@@ -48,7 +48,7 @@ export default function PrimaryNavbar() {
               </Button>
             </Link>
 
-            <Link href={'/'}>
+            <Link href={'/chat'}>
               <Button isIconOnly color="none">
                 <Image
                   src={
