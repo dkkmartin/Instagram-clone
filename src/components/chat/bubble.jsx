@@ -16,7 +16,7 @@ export default function Bubble({ message, user, isMe }) {
         <Avatar src="https://i.pravatar.cc/150" />
         <div>
           <p className="text-xs text-gray-500">@{user}</p>
-          <p className="text-sm">{message}</p>
+          <p className="text-sm text-black">{message}</p>
         </div>
       </div>
     </div>

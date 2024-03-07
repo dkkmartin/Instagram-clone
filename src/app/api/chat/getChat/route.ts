@@ -5,7 +5,7 @@ const supabaseAnonKey = process.env.SUPABASE_KEY
 
 const supabase = initSupabase(supabaseUrl, supabaseAnonKey)
 
-export async function GET(response: Response) {
+export async function GET(request: Request, response: Response) {
   try {
     const { data, error } = await supabase.from('chat').select('*')
 

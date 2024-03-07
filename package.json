@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3000",
     "host": "next dev -H 10.160.221.4 -p 3001",
     "build": "next build",
     "start": "next start",
