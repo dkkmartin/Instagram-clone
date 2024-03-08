@@ -39,7 +39,6 @@ export default function ChatPage() {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'chat' },
         (payload) => {
-          console.log(payload.new)
           setNewMessage(payload.new)
         }
       )

@@ -74,9 +74,9 @@ export type Database = {
           comments: string[] | null
           favourites: string[] | null
           information: string[] | null
+          last_seen: string | null
           liked: string[] | null
           media_url: string[] | null
-          online: boolean | null
           user_id: number
           user_name: string | null
         }
@@ -84,9 +84,9 @@ export type Database = {
           comments?: string[] | null
           favourites?: string[] | null
           information?: string[] | null
+          last_seen?: string | null
           liked?: string[] | null
           media_url?: string[] | null
-          online?: boolean | null
           user_id?: number
           user_name?: string | null
         }
@@ -94,9 +94,9 @@ export type Database = {
           comments?: string[] | null
           favourites?: string[] | null
           information?: string[] | null
+          last_seen?: string | null
           liked?: string[] | null
           media_url?: string[] | null
-          online?: boolean | null
           user_id?: number
           user_name?: string | null
         }

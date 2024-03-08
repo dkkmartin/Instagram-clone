@@ -4,7 +4,7 @@ import Post from '@/components/UserPost/post'
 import getData from '@/lib/getData'
 import { Spinner } from '@nextui-org/react'
 import Cookies from 'js-cookie'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useData } from '@/stores/useMediaStore'
 import { initSupabase } from '@/lib/supabaseClient'
 import { Providers } from './providers'
@@ -20,9 +20,27 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [newComment, setNewComment] = useState([])
 
+  const heartbeatIntervalId = useRef(null)
+
   useEffect(() => {
     console.log(databaseData)
   }, [databaseData])
+
+  useEffect(() => {
+    async function heartbeat() {
+      await fetch('/api/heartbeat'),
+        {
+          method: 'POST',
+        }
+    }
+
+    heartbeat()
+    heartbeatIntervalId.current = setInterval(heartbeat, 1 * 60 * 1000)
+
+    return () => {
+      clearInterval(heartbeatIntervalId.current)
+    }
+  }, [])
 
   useEffect(() => {
     const channels = supabase
