@@ -10,10 +10,10 @@ import {
   Tooltip,
 } from '@nextui-org/react'
 import { Providers } from '../providers'
-import Bubble from '@/components/Chat/bubble'
 import { useEffect, useState, useRef } from 'react'
 import { initSupabase } from '@/lib/supabaseClient'
 import Cookies from 'js-cookie'
+import Bubble from '@/components/Chat/bubble'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
