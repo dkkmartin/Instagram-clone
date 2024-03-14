@@ -25,8 +25,10 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [newMessage, setNewMessage] = useState({})
+  const [users, setUsers] = useState([])
   const userCookie = Cookies.get('username')
   const messagesEndRef = useRef(null)
+  const heartbeatIntervalId = useRef(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -64,6 +66,56 @@ export default function ChatPage() {
     getMessages()
   }, [])
 
+  useEffect(() => {
+    async function heartbeat() {
+      await fetch('/api/heartbeat', {
+        method: 'POST',
+      })
+    }
+
+    heartbeat()
+    heartbeatIntervalId.current = setInterval(heartbeat, 1 * 60 * 1000)
+
+    return () => {
+      clearInterval(heartbeatIntervalId.current)
+    }
+  }, [])
+
+  useEffect(() => {
+    async function getUsers() {
+      const res = await fetch('/api/heartbeat/getUsers')
+      const data = await res.json()
+
+      const wasLastSeenWithinTwoMinutes = (lastSeen) => {
+        if (lastSeen === null) {
+          return false
+        }
+
+        const lastSeenDate = new Date(lastSeen)
+        const currentDate = new Date()
+        const twoMinutes = 2 * 60 * 1000 // 2 minutes * 60 seconds * 1000 milliseconds
+
+        // Adjust for time difference between server and client
+        const timeDifference = currentDate.getTime() - lastSeenDate.getTime()
+
+        return timeDifference >= 0 && timeDifference <= twoMinutes
+      }
+
+      // Filter data to only include users last seen within the last 2 minutes
+      const recentUsers = data.users.filter((user) =>
+        wasLastSeenWithinTwoMinutes(user.last_seen)
+      )
+
+      setUsers(recentUsers)
+    }
+
+    getUsers()
+    const intervalId = setInterval(getUsers, 60 * 1000) // 60 seconds * 1000 milliseconds
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId)
+  }, [])
+
   async function handleSendMessage() {
     if (message !== '') {
       await fetch('/api/chat/sendChat', {
@@ -88,24 +140,15 @@ export default function ChatPage() {
       <header className="flex justify-between w-full p-4 shadow-xl">
         <h1 className="text-2xl font-semibold">Chat</h1>
         <AvatarGroup isBordered max={5}>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/151" />
-          </Tooltip>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/152" />
-          </Tooltip>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/153" />
-          </Tooltip>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/154" />
-          </Tooltip>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/155" />
-          </Tooltip>
-          <Tooltip content="@peperino1995">
-            <Avatar src="https://i.pravatar.cc/156" />
-          </Tooltip>
+          {users &&
+            users.map((user, index) => (
+              <Tooltip content={user.user_name} key={index}>
+                <Avatar
+                  color="success"
+                  src={'https://i.pravatar.cc/15' + index}
+                ></Avatar>
+              </Tooltip>
+            ))}
         </AvatarGroup>
       </header>
       <main className="flex flex-col justify-between h-[calc(100dvh-(72px+64px))]">

@@ -28,10 +28,9 @@ export default function Home() {
 
   useEffect(() => {
     async function heartbeat() {
-      await fetch('/api/heartbeat'),
-        {
-          method: 'POST',
-        }
+      await fetch('/api/heartbeat', {
+        method: 'POST',
+      })
     }
 
     heartbeat()
